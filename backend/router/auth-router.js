@@ -1,13 +1,13 @@
 import express from 'express';
-import { home } from '../controllers/auth-controller.js';
+import authControllers from '../controllers/auth-controller.js';
 
 const router = express.Router();
 
-router.route('/').get(home);
+router.route('/').get(authControllers.home);
+
+router.route('/register').post(authControllers.register);
 
 // Contact page route
-router.route('/contact').get((req, res) => {
-  res.send('Contact us at contact@example.com');
-});
+router.route('/contact').get(authControllers.contact);
 
 export default router;
