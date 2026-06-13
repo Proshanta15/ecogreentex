@@ -1,3 +1,4 @@
+import User from "../models/user-model.js";
 
 // Home page controller
 const home = async (req, res) => {
@@ -12,8 +13,15 @@ const home = async (req, res) => {
 // Registration page controller
 const register = async (req, res) => {
   try {
-    console.log('Received registration data:', req.body);
-    res.status(200).json({ message: 'Registration successful', data: req.body });
+    const { username, email, phone, password } = req.body;
+    const userExist = await User.findOne({ email });
+
+    if (userExist) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const userCreated = await User.create({ username, email, phone, password });
+    res.status(200).json({ message: 'User registered successfully', token: await userCreated.generateToken(), userId: userCreated._id.toString() });
   } catch (error) {
     console.error('Error in register controller:', error);
     res.status(500).send('Internal Server Error');
