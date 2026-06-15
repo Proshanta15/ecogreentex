@@ -43,6 +43,16 @@ userSchema.pre('save', async function (next) {
     }
 });
 
+// Method to compare password during login
+userSchema.methods.comparePassword = async function (password) {
+    try {
+        return await bycrypt.compare(password, this.password);
+    } catch (error) {
+        console.log('Error comparing password:', error);
+        return false;
+    }
+}
+
 // JWT token generation method
 userSchema.methods.generateToken = async function () {
     try {
@@ -56,6 +66,7 @@ userSchema.methods.generateToken = async function () {
         );
     } catch (error) {
         console.log('Error generating token:', error);
+        return null;
     }
 }
 

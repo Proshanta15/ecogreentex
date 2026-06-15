@@ -7,6 +7,8 @@ router.route('/').get(authControllers.home);
 
 router.route('/register').post(authControllers.register);
 
+router.route('/login').post(authControllers.login);
+
 // Contact page route
 router.route('/contact').get(authControllers.contact);
 
