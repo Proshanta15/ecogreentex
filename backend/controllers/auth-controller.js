@@ -23,8 +23,7 @@ const register = async (req, res) => {
     const userCreated = await User.create({ username, email, phone, password });
     res.status(200).json({ message: 'User registered successfully', token: await userCreated.generateToken(), userId: userCreated._id.toString() });
   } catch (error) {
-    console.error('Error in register controller:', error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 }
 
@@ -46,8 +45,7 @@ const login = async (req, res) => {
     }
 
   } catch (error) {
-    console.error('Error in login controller:', error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 }
 
