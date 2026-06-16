@@ -1,15 +1,18 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import { errorMiddleware } from './middlewares/error-middleware.js';
-import router from './router/auth-router.js';
+import authRoute from './router/auth-router.js';
 import connectDB from './utils/db.js';
+import contactRoute from './router/contact-router.js';
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 
-app.use("/api/auth", router);
+app.use("/api/auth", authRoute);
+app.use("/api/form", contactRoute);
+
 app.use(errorMiddleware);
 
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/header.css"; // Make sure this path is correct
 import Logo from "../assets/logo.png"; // Make sure this path is correct
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +30,10 @@ const Header = () => {
       <nav className="navbar">
         <div className="nav_container">
           <div className="logo-area">
+            <NavLink to="/" className="logo-link">
             <img className="logo" src={Logo} alt="GPT LEGACY LTD. Logo" />
+            </NavLink>
+            
           </div>
           
           <button 
@@ -44,10 +48,10 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="nav-links">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Services</a>
-            <a href="#">Contact</a>
+            <NavLink to="/" onClick={closeMenu}>Home</NavLink>
+            <NavLink to="/about" onClick={closeMenu}>About Us</NavLink>
+            <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
+            <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
           </div>
         </div>
       </nav>
@@ -64,10 +68,10 @@ const Header = () => {
           </button>
         </div>
         <div className="mobile-nav-links">
-          <a href="#" onClick={closeMenu}>Home</a>
-          <a href="#" onClick={closeMenu}>About Us</a>
-          <a href="#" onClick={closeMenu}>Services</a>
-          <a href="#" onClick={closeMenu}>Contact</a>
+          <NavLink to="/" onClick={closeMenu}>Home</NavLink>
+          <NavLink to="/about" onClick={closeMenu}>About Us</NavLink>
+          <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
+          <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
         </div>
       </div>
     </>
