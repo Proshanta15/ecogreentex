@@ -11,6 +11,16 @@ const contactSchema = new Schema({
         type: String,
         required: true,
     },
+    phone:
+    {
+        type: String,
+        required: true,
+    },
+    company:
+    {
+        type: String,
+        required: false,
+    },
     message:
     {
         type: String,
