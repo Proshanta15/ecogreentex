@@ -7,9 +7,9 @@ const Faq = () => {
 
   const faqs = [
     {
-      question: "What Types Of Apparel Does GPT Legacy Specialize In?",
+      question: "What Types Of Apparel Does Ecogreentex Specialize In?",
       answer:
-        "GPT Legacy specializes in comprehensive apparel sourcing across Knit, Woven, and Sweater categories for Men, Women, and Children. Our expertise includes casual wear, formal wear, activewear, streetwear, denim, outerwear, and sustainable fashion collections. We work with premium fabrics and innovative materials to meet diverse brand requirements.",
+        "Ecogreentex specializes in comprehensive apparel sourcing across Knit, Woven, and Sweater categories for Men, Women, and Children. Our expertise includes casual wear, formal wear, activewear, streetwear, denim, outerwear, and sustainable fashion collections. We work with premium fabrics and innovative materials to meet diverse brand requirements.",
     },
     {
       question: "What Is Your Total Annual Production Capacity?",

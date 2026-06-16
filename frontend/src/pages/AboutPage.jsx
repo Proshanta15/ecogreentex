@@ -74,7 +74,7 @@ const AboutPage = () => {
                   </span>
                 </h1>
                 <p className="about-page-hero-description">
-                  GPT Legacy is an ISO certified apparel sourcing house
+                  Ecogreentex is an ISO certified apparel sourcing house
                   headquartered in Dhaka, Bangladesh, specializing in sourcing,
                   product development, and quality assurance for global fashion
                   brands. With strong operational networks across Bangladesh,
@@ -143,7 +143,7 @@ const AboutPage = () => {
                 </p>
                 <p>
                   Driven by ethical sourcing, sustainability, and long-term
-                  partnerships, GPT Legacy is committed to delivering value,
+                  partnerships, Ecogreentex is committed to delivering value,
                   transparency, and excellence in every order. We don't just
                   source garments — we build dependable production solutions
                   tailored to the evolving needs of global apparel brands.
@@ -179,7 +179,7 @@ const AboutPage = () => {
                 <p className="about-page-vm-description">
                   To be a globally recognized apparel sourcing partner known for
                   reliability, ethical practices, and excellence. We envision a
-                  future where GPT Legacy is trusted by leading fashion brands
+                  future where Ecogreentex is trusted by leading fashion brands
                   for delivering responsible sourcing solutions, strong
                   manufacturing partnerships, and uncompromised quality across
                   product categories.

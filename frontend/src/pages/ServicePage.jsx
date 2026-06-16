@@ -2,7 +2,7 @@ import React from 'react'
 
 const ServicePage = () => {
   return (
-    <div>
+    <div className='container'>
       <h1>Our Services</h1>
     </div>
   )
