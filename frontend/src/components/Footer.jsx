@@ -26,7 +26,7 @@ const Footer = () => {
             <div className="info-row">
              <FaMapMarkerAlt  style={{ marginRight: "10px", color: "green", fontSize: "23px" }} />
               <p>
-                Rashid Court, House-4, Roat-7
+                Rashid Court, House-4, Road-7
                 <br />Sector-3, Uttara, Dhaka
               </p>
             </div>
@@ -60,9 +60,9 @@ const Footer = () => {
               reduce lead times while ensuring transparency and premium quality.
               Request a sourcing consultation.
             </p>
-            <a href="#" className="btn-modern">
+            <NavLink to="/contact" className="btn-modern">
               Get in touch <FaArrowRight style={{ marginLeft: "10px" }} />
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>
