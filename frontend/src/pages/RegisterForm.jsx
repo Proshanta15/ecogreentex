@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import "../styles/register.css";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
+import "../styles/register.css";
 
 export default function RegisterForm() {
   const [user, setUser] = useState({
@@ -13,6 +13,8 @@ export default function RegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({
@@ -21,10 +23,29 @@ export default function RegisterForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
-    console.log("Form Data:", user);
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+      if (response.ok) {
+        setUser({
+          username: "",
+          email: "",
+          phone: "",
+          password: "",
+        });
+        navigate("/login"); // Redirect to login page after successful registration
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const togglePasswordVisibility = () => {

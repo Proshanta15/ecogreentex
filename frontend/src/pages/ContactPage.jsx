@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { FaLinkedin } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa6";
-import { FaSquareFacebook } from "react-icons/fa6";
-import { FaSquareXTwitter } from "react-icons/fa6";
+import { useState } from "react";
+import { FaInstagram, FaLinkedin, FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
 import "../styles/contact-us.css";
 
 const ContactPage = () => {
@@ -78,7 +75,7 @@ const ContactPage = () => {
           <h1 className="contact-page-title">
             Global Sourcing.
             <span className="contact-page-title-highlight">
-              
+
               Local Expertise.
             </span>
           </h1>
