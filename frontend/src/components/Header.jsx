@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../styles/header.css"; // Make sure this path is correct
 import Logo from "../assets/logo.png"; // Make sure this path is correct
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../store/auth.jsx";
 
 const Header = () => {
+  const { isLoggedIn } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -52,6 +54,7 @@ const Header = () => {
             <NavLink to="/about" onClick={closeMenu}>About Us</NavLink>
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
             <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
+            {isLoggedIn && <NavLink to="/logout" onClick={closeMenu}>Logout</NavLink>}
           </div>
         </div>
       </nav>

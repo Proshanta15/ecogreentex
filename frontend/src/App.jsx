@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import RegisterForm from "./pages/RegisterForm";
 import ServicePage from "./pages/ServicePage";
+import LogoutPage from "./pages/LogoutPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<LogoutPage />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </div>

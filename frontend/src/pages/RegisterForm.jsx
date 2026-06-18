@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth.jsx";
 import Logo from "../assets/logo.png";
 import "../styles/register.css";
 
@@ -13,7 +14,10 @@ export default function RegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  
   const navigate = useNavigate();
+  
+  const { sotreTokenInLocalStorage } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +39,8 @@ export default function RegisterForm() {
         body: JSON.stringify(user)
       });
       if (response.ok) {
+        const res_data = await response.json();
+        sotreTokenInLocalStorage(res_data.token);
         setUser({
           username: "",
           email: "",

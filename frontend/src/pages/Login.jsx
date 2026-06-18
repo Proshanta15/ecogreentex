@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth.jsx";
 import "../styles/login.css";
 import Logo from "../assets/logo.png";
 
@@ -10,6 +11,9 @@ export default function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const { sotreTokenInLocalStorage } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +23,32 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login Data:", user);
+    
+    try {
+      const response = await fetch(`http://localhost:3000/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+      if (response.ok) {
+        const res_data = await response.json();
+        sotreTokenInLocalStorage(res_data.token);
+       setUser({
+        email: "",
+        password: "",
+       });
+
+        navigate("/");
+      } else {
+        console.error("Credential Error: Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+    }
   };
 
   const togglePasswordVisibility = () => {
