@@ -59,4 +59,15 @@ const contact = async (req, res) => {
   }
 }
 
-export default { contact, home, register, login };
+// User details controller
+const user = async (req, res) => {
+  try {
+    const userData = req.user; // Assuming req.user is set by auth middleware
+    console.log('User data from auth middleware:', userData);
+    return res.status(200).json({ msg: userData });
+  } catch (error) {
+    console.error('Error in user controller:', error);
+  }
+}
+
+export default { contact, home, register, login, user };

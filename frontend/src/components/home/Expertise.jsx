@@ -1,4 +1,3 @@
-import React from "react";
 
 const Expertise = () => {
   const expertiseCards = [
@@ -7,7 +6,7 @@ const Expertise = () => {
       title: "Product Design & Development",
       description:
         "Leveraging global trend platforms like WCSN, we partner with customers to develop innovative designs across Knit, Woven, and Sweater categories for Men, Women, and Children.",
-    //   image: designImage,
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&h=600&fit=crop",
       alt: "Product Design and Development",
       gradient: "card-gradient-1",
     },
@@ -16,7 +15,7 @@ const Expertise = () => {
       title: "Sourcing & Procurement",
       description:
         "Strategic raw material sourcing from certified suppliers ensuring quality, sustainability, and cost-effectiveness for every production run.",
-    //   image: sourcingImage,
+      image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&h=600&fit=crop",
       alt: "Sourcing and Procurement",
       gradient: "card-gradient-2",
     },
@@ -25,7 +24,7 @@ const Expertise = () => {
       title: "Quality Assurance",
       description:
         "Rigorous multi-point inspection system with AQL standards, in-line testing, and final random inspection for zero-defect delivery.",
-    //   image: qualityImage,
+      image: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=800&h=600&fit=crop",
       alt: "Quality Assurance",
       gradient: "card-gradient-3",
     },
@@ -34,7 +33,7 @@ const Expertise = () => {
       title: "Supply Chain Management",
       description:
         "End-to-end logistics coordination from factory to door, ensuring timely delivery with real-time tracking and compliance documentation.",
-    //   image: supplyChainImage,
+      image: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=800&h=600&fit=crop",
       alt: "Supply Chain Management",
       gradient: "card-gradient-4",
     },
@@ -64,7 +63,7 @@ const Expertise = () => {
           {expertiseCards.map((card, index) => (
             <div className={`expertise-card ${card.gradient}`} key={index}>
               <div className="card-image-wrapper">
-                {/* <img src={card.image} alt={card.alt} className="card-image" /> */}
+                <img src={card.image} alt={card.alt} className="card-image" />
                 <div className="card-overlay"></div>
                 <div className="card-icon-badge">
                   <span className="card-icon">{card.icon}</span>

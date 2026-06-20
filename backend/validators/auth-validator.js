@@ -51,13 +51,13 @@ export const signupSchema = z.object({
 
 // Contact Schema
 export const contactSchema = z.object({
-    ...userSchema,
+  ...userSchema,
   ...emailSchema,
 
   message: z
     .string({ required_error: "Message is required" })
     .trim()
-    .min(10, { message: "Message must be at least 10 characters long" })
+    .min(4, { message: "Message must be at least 10 characters long" })
     .max(1000, { message: "Message must be less than 1000 characters long" }),
 
   company: z

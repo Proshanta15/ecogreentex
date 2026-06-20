@@ -4,7 +4,7 @@ import "../styles/contact-us.css";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     phone: "",
     email: "",
     company: "",
@@ -21,22 +21,32 @@ const ContactPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Handle form submission logic here
-    console.log("Form Data:", formData);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormData({
-        name: "",
-        phone: "",
-        email: "",
-        company: "",
-        message: "",
+
+    try {
+      const response = await fetch("http://localhost:3000/api/form/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      alert("Thank you! Your message has been sent successfully.");
-    }, 1500);
+      if (response.ok) {
+        setIsSubmitting(false);
+        setFormData({
+          username: "",
+          phone: "",
+          email: "",
+          company: "",
+          message: "",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending contact form:", error);
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -170,9 +180,9 @@ const ContactPage = () => {
                   </label>
                   <input
                     type="text"
-                    name="name"
+                    name="username"
                     placeholder="Enter your full name"
-                    value={formData.name}
+                    value={formData.username}
                     onChange={handleChange}
                     className="contact-page-form-input"
                     required
