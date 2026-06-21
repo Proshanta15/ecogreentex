@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../store/auth.jsx";
+import { toast } from 'react-toastify';
 import Logo from "../assets/logo.png";
+import { useAuth } from "../store/auth.jsx";
 import "../styles/register.css";
 
 export default function RegisterForm() {
@@ -14,9 +15,9 @@ export default function RegisterForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  
+
   const navigate = useNavigate();
-  
+
   const { sotreTokenInLocalStorage } = useAuth();
 
   const handleChange = (e) => {
@@ -38,8 +39,10 @@ export default function RegisterForm() {
         },
         body: JSON.stringify(user)
       });
+      const res_data = await response.json();
+      console.log("Response from server:", res_data);
+
       if (response.ok) {
-        const res_data = await response.json();
         sotreTokenInLocalStorage(res_data.token);
         setUser({
           username: "",
@@ -48,7 +51,11 @@ export default function RegisterForm() {
           password: "",
         });
         navigate("/login"); // Redirect to login page after successful registration
+      } else {
+        // Handle registration errors (e.g., show error message)
+        toast.error(res_data.extraDetails ? res_data.extraDetails : res_data.message);
       }
+      console.log("Response:", response);
     } catch (error) {
       console.error("Error:", error);
     }

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import Logo from "../assets/logo.png";
 import { useAuth } from "../store/auth.jsx";
 import "../styles/login.css";
-import Logo from "../assets/logo.png";
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -25,7 +26,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await fetch(`http://localhost:3000/api/auth/login`, {
         method: "POST",
@@ -34,17 +35,17 @@ export default function Login() {
         },
         body: JSON.stringify(user)
       });
+      const res_data = await response.json();
       if (response.ok) {
-        const res_data = await response.json();
         sotreTokenInLocalStorage(res_data.token);
-       setUser({
-        email: "",
-        password: "",
-       });
+        setUser({
+          email: "",
+          password: "",
+        });
 
         navigate("/");
       } else {
-        console.error("Credential Error: Invalid email or password");
+        toast.error(res_data.extraDetails ? res_data.extraDetails : res_data.message);
       }
     } catch (error) {
       console.error("Login Error:", error);
