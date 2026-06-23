@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setUser(data);
-        console.log("User authenticated successfully:", data);
       }
     } catch (error) {
       console.error("Error during user authentication:", error);

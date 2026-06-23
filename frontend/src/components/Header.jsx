@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "../styles/header.css"; // Make sure this path is correct
-import Logo from "../assets/logo.png"; // Make sure this path is correct
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import Logo from "../assets/logo.png"; // Make sure this path is correct
 import { useAuth } from "../store/auth.jsx";
+import "../styles/header.css"; // Make sure this path is correct
 
 const Header = () => {
   const { isLoggedIn } = useAuth();
@@ -33,13 +33,13 @@ const Header = () => {
         <div className="nav_container">
           <div className="logo-area">
             <NavLink to="/" className="logo-link">
-            <img className="logo" src={Logo} alt="GPT LEGACY LTD. Logo" />
+              <img className="logo" src={Logo} alt="GPT LEGACY LTD. Logo" />
             </NavLink>
-            
+
           </div>
-          
-          <button 
-            className={`hamburger ${isMenuOpen ? "active" : ""}`} 
+
+          <button
+            className={`hamburger ${isMenuOpen ? "active" : ""}`}
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -54,6 +54,7 @@ const Header = () => {
             <NavLink to="/about" onClick={closeMenu}>About Us</NavLink>
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
             <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
+            {isLoggedIn && <NavLink to="/admin" onClick={closeMenu}>Admin</NavLink>}
             {isLoggedIn && <NavLink to="/logout" onClick={closeMenu}>Logout</NavLink>}
           </div>
         </div>
@@ -61,7 +62,7 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-menu-overlay ${isMenuOpen ? "active" : ""}`} onClick={closeMenu}></div>
-      
+
       {/* Mobile Menu */}
       <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
         <div className="mobile-menu-header">
@@ -75,6 +76,8 @@ const Header = () => {
           <NavLink to="/about" onClick={closeMenu}>About Us</NavLink>
           <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
           <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
+          {isLoggedIn && <NavLink to="/admin" onClick={closeMenu}>Admin</NavLink>}
+          {isLoggedIn && <NavLink to="/logout" onClick={closeMenu}>Logout</NavLink>}
         </div>
       </div>
     </>
