@@ -98,6 +98,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .btn-arrow {
@@ -288,6 +289,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .about-btn::before {
@@ -818,6 +820,7 @@
   box-shadow: 0 4px 15px rgba(27, 94, 63, 0.3);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .cta-button::before {

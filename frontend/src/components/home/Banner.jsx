@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import BannerVideo from '../../../src/assets/video.mp4'
 
 const Banner = () => {
@@ -26,11 +27,10 @@ const Banner = () => {
           brands with trusted, ethical factories across Bangladesh. We deliver uncompromised
           quality and timely delivery for every collection.
         </p>
-        
-        <button className="hero-btn">
+        <NavLink to="/services" className="hero-btn">
           EXPLORE OUR SERVICES
           <span className="btn-arrow">→</span>
-        </button>
+        </NavLink>
       </div>
     </div>
   )

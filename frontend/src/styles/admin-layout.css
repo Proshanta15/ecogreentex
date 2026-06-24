@@ -79,7 +79,9 @@
   background: var(--link-hover);
   transform: translateX(2px);
 }
-
+.active {
+  color: #d4af37 !important;
+}
 .admin-nav-link.active {
   background: var(--link-active-soft);
   color: var(--link-active);

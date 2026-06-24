@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Partner = () => {
   const features = [
@@ -146,7 +147,7 @@ const Partner = () => {
             <p className="cta-text">
               Join our growing list of satisfied brand partners
             </p>
-            <button className="cta-button">
+            <NavLink to="/contact" className="cta-button">
               START YOUR JOURNEY
               <svg className="cta-icon" viewBox="0 0 24 24" fill="none">
                 <path
@@ -156,7 +157,7 @@ const Partner = () => {
                   strokeLinecap="round"
                 />
               </svg>
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>

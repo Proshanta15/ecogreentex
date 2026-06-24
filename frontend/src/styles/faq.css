@@ -183,6 +183,7 @@
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .contact-support-btn svg {

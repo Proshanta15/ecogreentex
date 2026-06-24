@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/about-us.css";
 import Logo from "../assets/logo.png";
 import Faq from "../components/Faq";
+import { NavLink } from "react-router-dom";
 
 const AboutPage = () => {
   const values = [
@@ -259,10 +260,10 @@ const AboutPage = () => {
               Partner with us for reliable, ethical, and high-quality apparel
               sourcing solutions.
             </p>
-            <button className="about-page-cta-button">
+            <NavLink to="/contact" className="about-page-cta-button">
               CONTACT US TODAY
               <span className="about-page-cta-arrow">→</span>
-            </button>
+            </NavLink>
           </div>
         </div>
       </section>

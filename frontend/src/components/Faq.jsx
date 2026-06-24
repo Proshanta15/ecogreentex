@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "../styles/faq.css";
+import { NavLink } from "react-router-dom";
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -73,8 +74,8 @@ const Faq = () => {
               <div className="illustration-icon">💬</div>
               <h3>Quick Support</h3>
               <p>Can't find your answer? Our team is here to help 24/7</p>
-              <button className="contact-support-btn">
-                Contact Support
+              <NavLink to="/contact" className="contact-support-btn">
+              Contact Support
                 <svg viewBox="0 0 24 24" fill="none">
                   <path
                     d="M5 12H19M19 12L12 5M19 12L12 19"
@@ -83,7 +84,7 @@ const Faq = () => {
                     strokeLinecap="round"
                   />
                 </svg>
-              </button>
+              </NavLink>
             </div>
             <div className="floating-shapes">
               <div className="shape shape-1"></div>
@@ -127,27 +128,6 @@ const Faq = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="faq-cta">
-          <div className="cta-content">
-            <p className="cta-text">Still have questions? We're here to help</p>
-            <div className="cta-buttons">
-              <button className="cta-primary">
-                SCHEDULE A CALL
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-              <button className="cta-secondary">SEND INQUIRY</button>
-            </div>
           </div>
         </div>
       </div>

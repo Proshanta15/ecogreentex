@@ -47,6 +47,6 @@ a {
 }
 /* modern gradient & glassmorphism touches */
 .container {
-  max-width: 1380px;
   margin: 0 auto;
+  padding: 0 24px;
 }

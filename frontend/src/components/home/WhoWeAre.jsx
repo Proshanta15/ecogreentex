@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const WhoWeAre = () => {
   return (
@@ -31,19 +32,10 @@ const WhoWeAre = () => {
             competitive pricing, and timely delivery, helping our partners bring
             their fashion visions to life with absolute reliability.
           </p>
-
-          <button className="about-btn">
+          <NavLink to="/about" className="about-btn">
             LEARN MORE
-            <svg
-              className="btn-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+            <span className="btn-arrow">→</span>
+          </NavLink>
         </div>
 
         {/* Right Side - Visual Elements */}
