@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import LogoutPage from "./pages/LogoutPage";
 import RegisterForm from "./pages/RegisterForm";
 import ServicePage from "./pages/ServicePage";
+import ScrollToTop from "./ScrollToTop";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
     <>
       <BrowserRouter>
         <div className="App">
+          <ScrollToTop />
           <Header />
           <div className="content">
             <Routes>
