@@ -1,3 +1,8 @@
+.content {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0px 24px;
+}
 .admin-layout {
   --layout-bg: #eef3f9;
   --sidebar-bg: #0f172a;
@@ -10,7 +15,6 @@
   --main-muted: #64748b;
   --line: #dbe3ee;
 
-  width: min(1200px, 100% - 2rem);
   margin: 1.5rem auto;
   border-radius: 24px;
   overflow: hidden;
@@ -18,7 +22,7 @@
   box-shadow: 0 28px 60px rgba(15, 23, 42, 0.1);
   background: var(--layout-bg);
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 200px 1fr;
   min-height: 75vh;
 }
 

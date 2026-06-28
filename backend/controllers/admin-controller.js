@@ -26,5 +26,13 @@ const getAllContacts = async (req, res, next) => {
     }
 }
 
-export { getAllContacts, getAllUsers };
+const getAllServices = async (req, res, next) => {
+    try {
+        return res.status(200).json({ message: "Services endpoint is under construction" });
+    } catch (error) {
+        next(error)
+    }
+}
+
+export { getAllContacts, getAllServices, getAllUsers };
 
