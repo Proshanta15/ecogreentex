@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import '../styles/admin-user.css';
 
@@ -23,10 +24,6 @@ export const AdminUser = () => {
         }
     }
 
-    useEffect(() => {
-        getAllUsersData();
-    }, [])
-
     const filteredUsers = useMemo(() => {
         const value = searchTerm.trim().toLowerCase();
         if (!value) return users;
@@ -47,10 +44,27 @@ export const AdminUser = () => {
     ).size;
 
     const deleteUser = async (id) => {
-
+        try {
+            const response = await fetch(`http://localhost:3000/api/admin/users/delete/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: authorizationToken,
+                },
+            });
+            const data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                getAllUsersData(); // Refresh the user list after deletion
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    console.log(filteredUsers)
+    useEffect(() => {
+        getAllUsersData();
+    }, []);
+
 
     return (
         <section className="admin-users-page">
@@ -111,7 +125,7 @@ export const AdminUser = () => {
                                             <td>{curUser.isAdmin ? "Yes" : "No"}</td>
                                             <td>
                                                 <div className="action-group">
-                                                    <button className="btn btn-edit">Edit</button>
+                                                    <Link style={{ textDecoration: "none" }} to={`/admin/users/${curUser._id}/edit`} className="btn btn-edit">Edit</Link>
                                                     <button onClick={() => deleteUser(curUser._id)} className="btn btn-delete">Delete</button>
                                                 </div>
                                             </td>

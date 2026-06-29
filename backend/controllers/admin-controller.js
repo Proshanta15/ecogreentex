@@ -14,6 +14,20 @@ const getAllUsers = async (req, res, next) => {
     }
 }
 
+const getUserById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const data = await User.findOne({ _id: id }, { password: 0 }); // Exclude password field from the response
+        if (!data) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json(data);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getAllContacts = async (req, res, next) => {
     try {
         const contacts = await Contact.find({});
@@ -34,5 +48,17 @@ const getAllServices = async (req, res, next) => {
     }
 }
 
-export { getAllContacts, getAllServices, getAllUsers };
+const deleteUserById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const deletedUser = await User.deleteOne({ _id: id });
+        res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
+export { deleteUserById, getAllContacts, getAllServices, getAllUsers, getUserById };
 
