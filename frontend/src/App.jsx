@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { AdminLayout } from "./components/layouts/AdminLayout";
 import AboutPage from "./pages/AboutPage";
 import { AdminContact } from "./pages/AdminContact";
+import { AdminUpdate } from "./pages/AdminUpdate";
 import { AdminUser } from "./pages/AdminUser";
 import ContactPage from "./pages/ContactPage";
 import Error from "./pages/Error";
@@ -16,7 +17,7 @@ import ScrollToTop from "./ScrollToTop";
 
 function App() {
   return (
-    
+
     <>
       <BrowserRouter>
         <div className="App">
@@ -37,6 +38,7 @@ function App() {
                 {/* Nested routes for admin functionalities can be added here */}
                 <Route path="users" element={<AdminUser />} />
                 <Route path="contacts" element={<AdminContact />} />
+                <Route path="users/:id/edit" element={<AdminUpdate />} />
               </Route>
             </Routes>
           </div>

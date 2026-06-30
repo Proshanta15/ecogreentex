@@ -28,6 +28,20 @@ const getUserById = async (req, res, next) => {
     }
 }
 
+const updateUserById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const updatedUserData = req.body;
+
+        const updateUser = await User.updateOne({ _id: id }, {
+            $set: updatedUserData,
+        })
+        return res.status(200).json({ message: "User updated successfully" });
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getAllContacts = async (req, res, next) => {
     try {
         const contacts = await Contact.find({});
@@ -60,5 +74,5 @@ const deleteUserById = async (req, res, next) => {
 
 
 
-export { deleteUserById, getAllContacts, getAllServices, getAllUsers, getUserById };
+export { deleteUserById, getAllContacts, getAllServices, getAllUsers, getUserById, updateUserById };
 

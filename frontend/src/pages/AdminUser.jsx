@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 import '../styles/admin-user.css';
 
@@ -55,8 +56,10 @@ export const AdminUser = () => {
             console.log(data);
             if (response.ok) {
                 getAllUsersData(); // Refresh the user list after deletion
+                toast.success("User deleted successfully");
             }
         } catch (error) {
+            toast.error("Failed to delete user");
             console.error(error);
         }
     }
