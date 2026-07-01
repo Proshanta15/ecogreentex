@@ -1,7 +1,6 @@
 .content {
   max-width: 1380px;
   margin: 0 auto;
-  padding: 0px 24px;
 }
 .admin-layout {
   --layout-bg: #eef3f9;
@@ -15,7 +14,7 @@
   --main-muted: #64748b;
   --line: #dbe3ee;
 
-  margin: 1.5rem auto;
+  margin: 1.5rem 24px;
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid var(--line);

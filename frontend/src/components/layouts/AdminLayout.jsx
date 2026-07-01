@@ -36,13 +36,6 @@ export const AdminLayout = () => {
             </aside>
 
             <div className="admin-main">
-                <header className="admin-topbar">
-                    <div>
-                        <p className="topbar-kicker">Dashboard</p>
-                        <h1>Admin Console</h1>
-                    </div>
-                    <div className="status-pill">Live</div>
-                </header>
 
                 <div className="admin-content-shell">
                     <Outlet />

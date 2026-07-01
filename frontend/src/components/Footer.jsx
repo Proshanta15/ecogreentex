@@ -89,7 +89,7 @@ const Footer = () => {
       <div className="footer-copyright">
         <span>© {new Date().getFullYear()} Eco Green Tex Ltd. All Rights Reserved.</span>
         <span>
-          Developed with ⚡ by <a href="#">Sourcehub</a> · Modern Sourcing
+          Developed with ⚡ by <a href="#">Sourcehubit</a> · Modern Sourcing
           Solutions
         </span>
       </div>
