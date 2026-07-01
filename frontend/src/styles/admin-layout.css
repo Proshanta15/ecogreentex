@@ -1,4 +1,4 @@
-.content {
+.admin-content {
   max-width: 1380px;
   margin: 0 auto;
 }
@@ -14,7 +14,7 @@
   --main-muted: #64748b;
   --line: #dbe3ee;
 
-  margin: 1.5rem 24px;
+  margin: 1.5rem auto;
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -23,6 +23,7 @@
   display: grid;
   grid-template-columns: 200px 1fr;
   min-height: 75vh;
+    max-width: 1380px;
 }
 
 .admin-sidebar {
@@ -104,7 +105,6 @@
 }
 
 .admin-main {
-  padding: 1.2rem;
   color: var(--main-ink);
 }
 
@@ -147,9 +147,8 @@
 
 .admin-content-shell {
   border: 1px solid var(--line);
-  border-radius: 18px;
   background: #ffffff;
-  min-height: 60vh;
+  min-height: 100%;
   padding: 1rem;
 }
 
@@ -178,7 +177,6 @@
     border-radius: 16px;
   }
 
-  .admin-main,
   .admin-sidebar {
     padding: 0.9rem;
   }

@@ -7,6 +7,7 @@ import Partner from '../components/home/Partner'
 import Showcase from '../components/home/Showcase'
 import Brands from '../components/home/Brands'
 import Faq from '../components/Faq'
+import FooterShowcase from '../components/FooterShowcase'
 
 const HomePage = () => {
   return (
@@ -18,6 +19,7 @@ const HomePage = () => {
       <Showcase />
       <Brands />
       <Faq />
+      <FooterShowcase />
     </div>
   )
 }

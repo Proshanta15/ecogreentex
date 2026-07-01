@@ -3,6 +3,7 @@ import "../styles/about-us.css";
 import Logo from "../assets/logo.png";
 import Faq from "../components/Faq";
 import { NavLink } from "react-router-dom";
+import FooterShowcase from "../components/FooterShowcase";
 
 const AboutPage = () => {
   const values = [
@@ -268,6 +269,8 @@ const AboutPage = () => {
         </div>
       </section>
       <Faq />
+
+      <FooterShowcase />
     </>
   );
 };
