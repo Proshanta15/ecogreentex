@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { AdminLayout } from "./components/layouts/AdminLayout";
 import AboutPage from "./pages/AboutPage";
 import { AdminContact } from "./pages/AdminContact";
+import { AdminContactEdit } from "./pages/AdminContactEdit";
 import { AdminUpdate } from "./pages/AdminUpdate";
 import { AdminUser } from "./pages/AdminUser";
 import ContactPage from "./pages/ContactPage";
@@ -37,8 +38,9 @@ function App() {
               <Route path="/admin" element={<AdminLayout />}>
                 {/* Nested routes for admin functionalities can be added here */}
                 <Route path="users" element={<AdminUser />} />
-                <Route path="contacts" element={<AdminContact />} />
                 <Route path="users/:id/edit" element={<AdminUpdate />} />
+                <Route path="contacts" element={<AdminContact />} />
+                <Route path="contacts/:id/edit" element={<AdminContactEdit />} />
               </Route>
             </Routes>
           </div>

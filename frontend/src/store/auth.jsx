@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
 
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState("");
+  // const [isLoading, setIsLoading] = useState(true);
   const authorizationToken = `Bearer ${token}`
 
   // Function to store token in localStorage
@@ -36,6 +37,9 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setUser(data);
+        // setIsLoading(false);
+      } else {
+        // setIsLoading(false);
       }
     } catch (error) {
       console.error("Error during user authentication:", error);

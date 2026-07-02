@@ -1,7 +1,19 @@
-import { NavLink, Outlet } from "react-router-dom"
-import "../../styles/admin-layout.css"
+import { Navigate, NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../../store/auth";
+import "../../styles/admin-layout.css";
 
 export const AdminLayout = () => {
+
+    const { user } = useAuth();
+
+    console.log("Admin Layout", user);
+
+
+    if (!user.isAdmin) {
+        return <Navigate to="/" />;
+    }
+
+
     const navLinkClass = ({ isActive }) =>
         isActive ? "admin-nav-link active" : "admin-nav-link"
 

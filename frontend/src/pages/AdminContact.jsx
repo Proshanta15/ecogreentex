@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 
 export const AdminContact = () => {
@@ -41,6 +42,25 @@ export const AdminContact = () => {
     const uniqueDomains = new Set(
         users.map((user) => (user.email?.split("@")[1] || "").toLowerCase())
     ).size;
+
+
+    const deleteContactById = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/admin/contacts/delete/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: authorizationToken,
+                }
+            })
+            if (response.ok) {
+                toast.success("Contact deleted successfully");
+                getAllContactsData(); // Refresh the contact list after deletion
+            }
+        } catch (error) {
+            toast.error("Failed to delete contact");
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         getAllContactsData();
@@ -137,11 +157,11 @@ export const AdminContact = () => {
                                 </div>
 
                                 <div className="contact-card-actions">
-                                    <Link to={`/admin/contacts/${curUser._id}`} className="btn btn-primary">
+                                    <Link to={`/admin/contacts/${curUser._id}/edit`} className="btn btn-primary">
                                         <span className="btn-icon">✏️</span> Edit
                                     </Link>
-                                    <button className="btn btn-danger">
-                                        <span className="btn-icon">🗑️</span> Delete
+                                    <button className="btn btn-danger" onClick={() => deleteContactById(curUser._id)}>
+                                        <span className="btn-icon" >🗑️</span> Delete
                                     </button>
                                 </div>
                             </div>
