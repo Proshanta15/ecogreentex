@@ -3,11 +3,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState("");
-  // const [isLoading, setIsLoading] = useState(true);
-  const authorizationToken = `Bearer ${token}`
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const authorizationToken = `Bearer ${token}`;
 
   // Function to store token in localStorage
   const sotreTokenInLocalStorage = (serverToken) => {
@@ -28,30 +27,50 @@ export const AuthProvider = ({ children }) => {
 
   const userAuthentication = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/user`, {
+      const response = await fetch("http://localhost:3000/api/auth/user", {
         method: "GET",
         headers: {
-          "Authorization": authorizationToken,
+          Authorization: authorizationToken,
         },
       });
+
       if (response.ok) {
         const data = await response.json();
-        setUser(data);
-        // setIsLoading(false);
+
+        console.log("API Response:", data); // 👈 Add here
+
+        setUser(data.msg);
       } else {
-        // setIsLoading(false);
+        setUser(null);
       }
     } catch (error) {
-      console.error("Error during user authentication:", error);
+      console.log(error);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    userAuthentication();
-  }, []);
+    if (token) {
+      userAuthentication();
+    } else {
+      setUser(null);
+      setIsLoading(false);
+    }
+  }, [token]);
 
   return (
-    <AuthContext.Provider value={{ sotreTokenInLocalStorage, logoutUser, isLoggedIn, user, authorizationToken }}>
+    <AuthContext.Provider
+      value={{
+        sotreTokenInLocalStorage,
+        logoutUser,
+        isLoggedIn,
+        user,
+        authorizationToken,
+        isLoading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
