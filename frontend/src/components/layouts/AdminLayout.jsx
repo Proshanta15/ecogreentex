@@ -1,12 +1,13 @@
 import { Navigate, NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../../store/auth";
 import "../../styles/admin-layout.css";
+import IsLoading from "../IsLoading";
 
 export const AdminLayout = () => {
   const { user, isLoading } = useAuth();
  
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <IsLoading />;
   }
 
   if (!user || !user.isAdmin) {
@@ -59,6 +60,7 @@ export const AdminLayout = () => {
 
       <div className="admin-main">
         <div className="admin-content-shell">
+
           <Outlet />
         </div>
       </div>

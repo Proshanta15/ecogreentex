@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
 
-        console.log("API Response:", data); // 👈 Add here
+        // console.log("API Response:", data); // 👈 Add here
 
         setUser(data.msg);
       } else {
