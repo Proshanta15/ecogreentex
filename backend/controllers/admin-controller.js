@@ -54,6 +54,33 @@ const getAllContacts = async (req, res, next) => {
     }
 }
 
+const getContactById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const data = await Contact.findOne({ _id: id });
+        if (!data) {
+            return res.status(404).json({ message: "Contact not found" });
+        }
+        res.status(200).json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const updateContactById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const updateContactData = req.body;
+
+        const updateContact = await Contact.updateOne({ _id: id }, {
+            $set: updateContactData,
+        });
+        res.status(200).json({ message: "Contact updated successfully" });
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getAllServices = async (req, res, next) => {
     try {
         return res.status(200).json({ message: "Services endpoint is under construction" });
@@ -72,7 +99,17 @@ const deleteUserById = async (req, res, next) => {
     }
 }
 
+const deleteContactById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const deletedContact = await Contact.deleteOne({ _id: id });
+        res.status(200).json({ message: "Contact deleted successfully" });
+    } catch (error) {
+        next(error);
+    }
+}
 
 
-export { deleteUserById, getAllContacts, getAllServices, getAllUsers, getUserById, updateUserById };
+
+export { deleteContactById, deleteUserById, getAllContacts, getAllServices, getAllUsers, getContactById, getUserById, updateContactById, updateUserById };
 
