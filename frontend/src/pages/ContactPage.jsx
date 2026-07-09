@@ -1,6 +1,13 @@
-import { useState } from "react";
-import { FaInstagram, FaLinkedin, FaSquareFacebook, FaSquareXTwitter } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { useAuth } from "../store/auth";
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaSquareFacebook,
+  FaSquareXTwitter,
+} from "react-icons/fa6";
 import "../styles/contact-us.css";
+import IsLoading from "../components/IsLoading";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +17,10 @@ const ContactPage = () => {
     company: "",
     message: "",
   });
+
+  const [contactContentData, setContactContentData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { authorizationToken } = useAuth();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -42,6 +53,7 @@ const ContactPage = () => {
           company: "",
           message: "",
         });
+        alert("Your message has been sent successfully!");
       }
     } catch (error) {
       console.error("Error sending contact form:", error);
@@ -49,30 +61,101 @@ const ContactPage = () => {
     }
   };
 
+  const getContactContentData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:3000/api/admin/contact-content`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: authorizationToken,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      // Since you always have one data field, get the first item directly
+      if (result.success && result.data && result.data.length > 0) {
+        // Get the first item from the array
+        const contactData = result.data[0];
+        setContactContentData(contactData);
+      } else {
+        // Fallback to default data if no data in DB
+        setContactContentData({
+          title: "Global Sourcing.",
+          subtitle: "Local Expertise.",
+          description:
+            "Partner with an ISO-certified buying house dedicated to ethical apparel sourcing and uncompromised quality assurance. From design to final shipment, we bridge the gap between global fashion brands and Bangladesh's premier manufacturing facilities.",
+          phone: "+8801518-900571",
+          email: "sobuj@ecogreentex.eu.com",
+          bangladeshOffice:
+            "Rashid Court, House-4, Road-7, Sector 3, Uttara, Dhaka",
+          chinaOffice:
+            "Paojiang Industrial Park, Shaoxing 312000, Zhejiang, China",
+          linkedin: "https://www.linkedin.com/company/ecogreentex",
+          instagram: "https://www.instagram.com/ecogreentex",
+          facebook: "https://www.facebook.com/ecogreentex",
+          twitter: "https://twitter.com/ecogreentex",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching contact content:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (authorizationToken) {
+      getContactContentData();
+    }
+  }, [authorizationToken]);
+
+  // Use data from API or fallback
   const contactInfo = [
     {
       icon: "📞",
       title: "Phone",
-      details: "+8801518-900571",
-      link: "tel:+8801518900571",
+      details: contactContentData?.phone || "+8801518-900571",
+      link: `tel:${contactContentData?.phone || "+8801518900571"}`,
     },
     {
       icon: "✉️",
       title: "Email",
-      details: "sobuj@ecogreentex.eu.com",
-      link: "mailto:sobuj@ecogreentex.eu.com",
+      details: contactContentData?.email || "sobuj@ecogreentex.eu.com",
+      link: `mailto:${contactContentData?.email || "sobuj@ecogreentex.eu.com"}`,
     },
     {
       icon: "📍",
       title: "Bangladesh Office",
-      details: "Rashid Court, House-4, Road-7, Sector 3, Uttara, Dhaka",
+      details:
+        contactContentData?.bangladeshOffice ||
+        "Rashid Court, House-4, Road-7, Sector 3, Uttara, Dhaka",
     },
     {
       icon: "📍",
       title: "China Office",
-      details: "Paojiang Industrial Park, Shaoxing 312000, Zhejiang, China",
+      details:
+        contactContentData?.chinaOffice ||
+        "Paojiang Industrial Park, Shaoxing 312000, Zhejiang, China",
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="contact-loading">
+        <div className="contact-loading-spinner"></div>
+        <IsLoading />
+      </div>
+    );
+  }
+
   return (
     <section className="contact-page">
       <div className="contact-page-container">
@@ -83,17 +166,14 @@ const ContactPage = () => {
             GET IN TOUCH
           </div>
           <h1 className="contact-page-title">
-            Global Sourcing.
+            {contactContentData?.title || "Global Sourcing."}
             <span className="contact-page-title-highlight">
-
-              Local Expertise.
+              {contactContentData?.subtitle || " Local Expertise."}
             </span>
           </h1>
           <p className="contact-page-subtitle">
-            Partner with an ISO-certified buying house dedicated to ethical
-            apparel sourcing and uncompromised quality assurance. From design to
-            final shipment, we bridge the gap between global fashion brands and
-            Bangladesh's premier manufacturing facilities.
+            {contactContentData?.description ||
+              "Partner with an ISO-certified buying house dedicated to ethical apparel sourcing and uncompromised quality assurance."}
           </p>
         </div>
 
@@ -129,28 +209,36 @@ const ContactPage = () => {
               <h4 className="contact-page-social-title">Follow Us</h4>
               <div className="contact-page-social-icons">
                 <a
-                  href="#"
+                  href={contactContentData?.linkedin || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="contact-page-social-link"
                   aria-label="LinkedIn"
                 >
                   <FaLinkedin />
                 </a>
                 <a
-                  href="#"
+                  href={contactContentData?.instagram || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="contact-page-social-link"
                   aria-label="Instagram"
                 >
                   <FaInstagram />
                 </a>
                 <a
-                  href="#"
+                  href={contactContentData?.facebook || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="contact-page-social-link"
                   aria-label="Facebook"
                 >
                   <FaSquareFacebook />
                 </a>
                 <a
-                  href="#"
+                  href={contactContentData?.twitter || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="contact-page-social-link"
                   aria-label="Twitter"
                 >

@@ -21,19 +21,16 @@ const ServicePage = () => {
         men: [
           {
             name: "Men's Cotton T-Shirts",
-            icon: "👕",
             image:
               "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Polo Shirts",
-            icon: "👔",
             image:
               "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=300&fit=crop",
           },
           {
             name: "Men's V-Neck Sweaters",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
           },
@@ -41,25 +38,21 @@ const ServicePage = () => {
         women: [
           {
             name: "Women's Knit Dresses",
-            icon: "👗",
             image:
               "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Lingerie Set",
-            icon: "👙",
             image:
               "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Cardigans",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Turtlenecks",
-            icon: "👕",
             image:
               "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
           },
@@ -67,13 +60,11 @@ const ServicePage = () => {
         children: [
           {
             name: "Kids Knit T-Shirts",
-            icon: "👕",
             image:
               "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=300&fit=crop",
           },
           {
             name: "Kids Cardigans",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=300&fit=crop",
           },
@@ -93,25 +84,21 @@ const ServicePage = () => {
         men: [
           {
             name: "Men's Intended Knit Sweaters",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Pullovers",
-            icon: "👕",
             image:
               "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Windbreakers",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Navy Denim Coat",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
           },
@@ -119,31 +106,26 @@ const ServicePage = () => {
         women: [
           {
             name: "Women's Fashion Sweaters",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Lightweight Knit Dresses",
-            icon: "👗",
             image:
               "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Fashion Coats",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Chunky Knits",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Turtleneck Sweaters",
-            icon: "👕",
             image:
               "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
           },
@@ -151,13 +133,11 @@ const ServicePage = () => {
         children: [
           {
             name: "Kids Sweater Sets",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=300&fit=crop",
           },
           {
             name: "Kids Cardigans",
-            icon: "🧣",
             image:
               "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=300&fit=crop",
           },
@@ -177,25 +157,21 @@ const ServicePage = () => {
         men: [
           {
             name: "Men's Denim Jeans",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Cargo Pants",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Chinos",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=300&fit=crop",
           },
           {
             name: "Men's Denim Jackets",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
           },
@@ -203,25 +179,21 @@ const ServicePage = () => {
         women: [
           {
             name: "Women's Denim Jeans",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Wide Leg Pants",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Denim Skirts",
-            icon: "👗",
             image:
               "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=400&h=300&fit=crop",
           },
           {
             name: "Women's Corduroy Pants",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
           },
@@ -229,13 +201,11 @@ const ServicePage = () => {
         children: [
           {
             name: "Kids Denim Jeans",
-            icon: "👖",
             image:
               "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=300&fit=crop",
           },
           {
             name: "Kids Denim Jackets",
-            icon: "🧥",
             image:
               "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=300&fit=crop",
           },
@@ -293,7 +263,6 @@ const ServicePage = () => {
             <h1 className="services-page-title">
               Premium Apparel
               <span className="services-page-title-highlight">
-                {" "}
                 Collections
               </span>
             </h1>
@@ -396,9 +365,6 @@ const ServicePage = () => {
                             </div>
                           </div>
                           <div className="services-page-item-info">
-                            <span className="services-page-item-icon">
-                              {item.icon}
-                            </span>
                             <span className="services-page-item-name">
                               {item.name}
                             </span>
