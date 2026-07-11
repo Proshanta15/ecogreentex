@@ -12,8 +12,8 @@ dotenv.config();
 const app = express();
 
 let corsOptions = {
-    // origin: 'http://localhost:5173', // Replace with your frontend URL
-    origin: 'http://localhost:5174', // Replace with your frontend URL
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    // origin: 'http://localhost:5174', // Replace with your frontend URL
     // origin: 'https://ecogreentex.eu.com', // Replace with your frontend URL
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',

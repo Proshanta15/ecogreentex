@@ -152,6 +152,11 @@
   padding: 1rem;
 }
 
+@media (max-width: 1381px) {
+  .admin-layout{
+    margin: 20px 20px;
+  }
+}
 @media (max-width: 980px) {
   .admin-layout {
     grid-template-columns: 1fr;
