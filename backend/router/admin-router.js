@@ -28,6 +28,7 @@ router.route('/contact/content/update/:id').patch(authMiddleware, adminMiddlewar
 router.route('/faq/create').post(authMiddleware, adminMiddleware, createFAQ);
 router.route('/faq').get(authMiddleware, adminMiddleware, getAllFAQ);
 router.route('/faq/edit/:id').get(authMiddleware, adminMiddleware, getSingleFAQ);
+router.route('/faq/edit/:id').get(authMiddleware, adminMiddleware, getSingleFAQ);
 router.route('/faq/delete/:id').delete(authMiddleware, adminMiddleware, deleteFAQ);
 
 export default router;
