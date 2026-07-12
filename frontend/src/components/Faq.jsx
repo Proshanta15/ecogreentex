@@ -1,50 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "../styles/faq.css";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [faqs, setFaqs] = useState([]);
+  const { authorizationToken } = useAuth();
 
-  
+  const getAllFaqData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/admin/faq`, {
+        method: "GET",
+        headers: {
+          Authorization: authorizationToken,
+        },
+      });
+      const data = await response.json();
+      console.log("FAQs", data);
+      setFaqs(Array.isArray(data) ? data : data.data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const faqs = [
-    {
-      question: "What Types Of Apparel Does Ecogreentex Specialize In?",
-      answer:
-        "Ecogreentex specializes in comprehensive apparel sourcing across Knit, Woven, and Sweater categories for Men, Women, and Children. Our expertise includes casual wear, formal wear, activewear, streetwear, denim, outerwear, and sustainable fashion collections. We work with premium fabrics and innovative materials to meet diverse brand requirements.",
-    },
-    {
-      question: "What Is Your Total Annual Production Capacity?",
-      answer:
-        "Our network of certified partner factories has a combined annual production capacity of over 50 million units. We maintain strong relationships with 200+ manufacturing units across Bangladesh, allowing us to scale production based on client needs while ensuring consistent quality and timely delivery.",
-    },
-    {
-      question: "Which Global Compliance Standards Do Your Factories Follow?",
-      answer:
-        "All our partner factories are certified with international compliance standards including ISO 9001, BSCI, SMETA, OEKO-TEX, GOTS, and WRAP. We ensure strict adherence to labor laws, workplace safety, environmental regulations, and ethical manufacturing practices across our entire supply chain.",
-    },
-    {
-      question: "What Are Your Standard Shipment And Payment Terms?",
-      answer:
-        "We offer flexible shipment terms including FOB, CIF, and CFR. Standard lead times range from 45-60 days for production, with express options available. Payment terms typically include 30-50% deposit with balance against shipping documents, negotiable based on client relationship and order volume.",
-    },
-    {
-      question: "How Do You Ensure Product Quality And Fit?",
-      answer:
-        "We implement a rigorous multi-stage quality assurance system including in-line inspections, pre-shipment inspections, and AQL 2.5/4.0 standards. Our QA team conducts fabric testing, size set evaluations, wash tests, and fit checks on production samples to ensure consistency and precision.",
-    },
-    {
-      question: "Do You Provide Design And Trend Support?",
-      answer:
-        "Yes, we offer comprehensive design and product development support. Our team leverages global trend platforms like WGSN and collaborates with clients on tech packs, sampling, prototyping, and trend forecasting. We help bring fashion visions to life with innovative design solutions.",
-    },
-    {
-      question: "How Do You Handle Communication With International Clients?",
-      answer:
-        "We maintain a dedicated account management team providing 24/7 communication support via email, video calls, and project management platforms. Regular production updates, virtual factory tours, and transparent reporting ensure seamless collaboration with international clients.",
-    },
-  ];
+  useEffect(() => {
+    getAllFaqData();
+  }, []);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);

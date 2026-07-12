@@ -17,7 +17,6 @@ const AdminFAQ = () => {
       const response = await fetch(`http://localhost:3000/api/admin/faq`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
           Authorization: authorizationToken,
         },
       });
@@ -35,7 +34,6 @@ const AdminFAQ = () => {
       }
       console.log("FAQ Data:", result.data);
     } catch (error) {
-      console.error(error);
       toast.error("Failed to fetch FAQs");
       setFaqData([]);
     } finally {

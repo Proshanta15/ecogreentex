@@ -46,6 +46,24 @@ export const getSingleFAQ = async(req, res, next) =>{
     }
 }
 
+// Update Single Faq
+export const updateSingleFAQ = async(req, res, next) =>{
+    try {
+        const id = req.params.id;
+        const updateFaqData = req.body;
+
+        const updateFaq = await Faq.updateOne({ _id: id }, {
+            $set: updateFaqData
+        })
+        return res.status(200).json({
+            success: true,
+            message: 'FAQ updated successfully'
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 // Delete Faq
 export const deleteFAQ = async(req, res, next) =>{
     try {

@@ -11,30 +11,30 @@ const AdminFaqUpdate = () => {
     answer: ''
   });
 
-   const params = useParams();
+  const params = useParams();
   const { authorizationToken } = useAuth();
   const navigate = useNavigate();
 
- const getSingleFaqData = async () =>{
-  try {
-    const response = await fetch(`http://localhost:3000/api/admin/faq/edit/${params.id}`,{
-      method: "GET",
-                headers: {
-                    "Authorization": authorizationToken,
-                }
-    });
-    if (!response.ok) {
+  const getSingleFaqData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/admin/faq/edit/${params.id}`, {
+        method: "GET",
+        headers: {
+          "Authorization": authorizationToken,
+        }
+      });
+      if (!response.ok) {
         throw new Error('Failed to fetch FAQ data');
+      }
+      const faqData = await response.json();
+      setFormData({
+        question: faqData.question,
+        answer: faqData.answer
+      });
+    } catch (error) {
+      toast.error('Error fetching FAQ data: ' + error.message);
     }
-    const faqData = await response.json();
-    setFormData({
-      question: faqData.question,
-      answer: faqData.answer
-    });
-  } catch (error) {
-    toast.error('Error fetching FAQ data: ' + error.message);
-  }
- };
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,32 +47,30 @@ const AdminFaqUpdate = () => {
     e.preventDefault();
 
     try {
-        const response = await fetch(`http://localhost:3000/api/admin/faq/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": authorizationToken
-            },
-            body: JSON.stringify(formData)
-        });
-        const res_data = await response.json();
-        
-        if (!response.ok) {
-            throw new Error(res_data.message || 'Failed to add FAQ');
-        }
+      const response = await fetch(`http://localhost:3000/api/admin/faq/update/${params.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": authorizationToken
+        },
+        body: JSON.stringify(formData)
+      });
+      const res_data = await response.json();
 
+      if (response.ok) {
+        toast.success('FAQ updated successfully!');
         setFormData({ question: '', answer: '' });
         navigate('/admin/faq');
-        toast.success('FAQ added successfully!');
+      }
+
+
     } catch (error) {
-        console.error("Error adding FAQ:", error);
-        toast.error('Error adding FAQ: ' + error.message);
+      toast.error('Error adding FAQ: ' + error.message);
     }
   };
-
   useEffect(() => {
-          getSingleFaqData();
-      }, []);
+    getSingleFaqData();
+  }, []);
 
 
   return (
@@ -83,7 +81,7 @@ const AdminFaqUpdate = () => {
           <h2 className="faq-form-card-title">
             Update FAQ
           </h2>
-          
+
           <form className="faq-form" onSubmit={handleSubmit}>
             <div className="faq-form-group">
               <label htmlFor="question">Question</label>
@@ -113,7 +111,7 @@ const AdminFaqUpdate = () => {
 
             <div className="faq-form-actions">
               <button type="submit" className="faq-form-btn-submit">
-               Update FAQ
+                Update FAQ
               </button>
             </div>
           </form>

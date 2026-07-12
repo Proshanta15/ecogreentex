@@ -3,7 +3,7 @@ import { deleteContactById, deleteUserById, getAllContacts, getAllServices, getA
 import adminMiddleware from "../middlewares/admin-middleware.js";
 import authMiddleware from "../middlewares/auth-middleware.js";
 import { contactContentForm, getContactContent, updateContactContent } from "../controllers/contact-content-controller.js";
-import { createFAQ, deleteFAQ, getAllFAQ, getSingleFAQ } from "../controllers/faq-controller.js";
+import { createFAQ, deleteFAQ, getAllFAQ, getSingleFAQ, updateSingleFAQ } from "../controllers/faq-controller.js";
 const router = express.Router();
 
 router.route('/users').get(authMiddleware, adminMiddleware, getAllUsers);
@@ -28,7 +28,7 @@ router.route('/contact/content/update/:id').patch(authMiddleware, adminMiddlewar
 router.route('/faq/create').post(authMiddleware, adminMiddleware, createFAQ);
 router.route('/faq').get(authMiddleware, adminMiddleware, getAllFAQ);
 router.route('/faq/edit/:id').get(authMiddleware, adminMiddleware, getSingleFAQ);
-router.route('/faq/edit/:id').get(authMiddleware, adminMiddleware, getSingleFAQ);
+router.route('/faq/update/:id').patch(authMiddleware, adminMiddleware, updateSingleFAQ);
 router.route('/faq/delete/:id').delete(authMiddleware, adminMiddleware, deleteFAQ);
 
 export default router;
