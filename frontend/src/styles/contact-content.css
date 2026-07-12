@@ -1,7 +1,7 @@
 /* contact-content.css */
 
 .contact-content-page {
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 40px 24px 60px;
   min-height: 100vh;
@@ -248,6 +248,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(27, 94, 63, 0.25);
+  text-decoration: none;
 }
 
 .contact-content-update-btn:hover {

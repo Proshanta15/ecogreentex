@@ -1,7 +1,7 @@
 /* contact-content.css */
 
 .contact-content-form-page {
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 40px 24px 60px;
   min-height: 100vh;

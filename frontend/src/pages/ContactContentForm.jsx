@@ -3,6 +3,8 @@ import { useAuth } from "../store/auth";
 import IsLoading from "../components/IsLoading";
 import "../styles/contact-content.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { FaXTwitter, FaSquareFacebook, FaSquareInstagram, FaLinkedin } from "react-icons/fa6";
 
 const ContactContentForm = () => {
   const [contactContentData, setContactContentData] = useState(null);
@@ -13,7 +15,7 @@ const ContactContentForm = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/admin/contact-content`,
+        `http://localhost:3000/api/admin/contact/content`,
         {
           method: "GET",
           headers: {
@@ -141,7 +143,7 @@ const ContactContentForm = () => {
             <span className="contact-content-label">Social Links</span>
             <div className="contact-content-social-grid">
               <div className="contact-content-item">
-                <span className="contact-content-item-icon">🔗</span>
+                <span className="contact-content-item-icon"><FaLinkedin /></span>
                 <div>
                   <span className="contact-content-item-label">LinkedIn</span>
                   {contactContentData?.linkedin ? (
@@ -160,7 +162,7 @@ const ContactContentForm = () => {
               </div>
 
               <div className="contact-content-item">
-                <span className="contact-content-item-icon">📸</span>
+                <span className="contact-content-item-icon"><FaSquareInstagram /></span>
                 <div>
                   <span className="contact-content-item-label">Instagram</span>
                   {contactContentData?.instagram ? (
@@ -179,7 +181,7 @@ const ContactContentForm = () => {
               </div>
 
               <div className="contact-content-item">
-                <span className="contact-content-item-icon">👍</span>
+                <span className="contact-content-item-icon"><FaSquareFacebook /></span>
                 <div>
                   <span className="contact-content-item-label">Facebook</span>
                   {contactContentData?.facebook ? (
@@ -198,7 +200,7 @@ const ContactContentForm = () => {
               </div>
 
               <div className="contact-content-item">
-                <span className="contact-content-item-icon">🐦</span>
+                <span className="contact-content-item-icon"><FaXTwitter /></span>
                 <div>
                   <span className="contact-content-item-label">Twitter / X</span>
                   {contactContentData?.twitter ? (
@@ -221,16 +223,11 @@ const ContactContentForm = () => {
           {/* Footer with Update Button */}
           <div className="contact-content-footer">
             <div className="contact-content-footer-left">
-              <p className="contact-content-updated">
-                Last updated:{" "}
-                {contactContentData?.updatedAt
-                  ? new Date(contactContentData.updatedAt).toLocaleString()
-                  : "N/A"}
-              </p>
+              
             </div>
-            <button className="contact-content-update-btn">
+            <Link to={`/admin/contact/content/update/${contactContentData?._id}`} className="contact-content-update-btn">
               ✏️ Update Content
-            </button>
+            </Link>
           </div>
         </div>
       </div>

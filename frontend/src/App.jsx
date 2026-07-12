@@ -17,6 +17,10 @@ import ServicePage from "./pages/ServicePage";
 import ScrollToTop from "./ScrollToTop";
 import ContactContentForm from "./pages/ContactContentForm";
 import { AdminService } from "./pages/AdminService";
+import ContactContentUpdate from "./pages/ContactContentUpdate";
+import AdminFAQ from "./pages/AdminFAQ";
+import AdminFaqForm from "./pages/AdminFaqForm";
+import AdminFaqUpdate from "./pages/AdminFaqUpdate";
 
 function App() {
   return (
@@ -43,7 +47,11 @@ function App() {
                 <Route path="users/:id/edit" element={<AdminUpdate />} />
                 <Route path="contacts" element={<AdminContact />} />
                 <Route path="contacts/:id/edit" element={<AdminContactEdit />} />
-                <Route path="contact-content" element={ <ContactContentForm />} />
+                <Route path="contact/content" element={ <ContactContentForm />} />
+                <Route path="contact/content/update/:id" element={ <ContactContentUpdate />} />
+                <Route path="faq" element={ <AdminFAQ />} />
+                <Route path="faq/create" element={ <AdminFaqForm />} />
+                <Route path="faq/edit/:id" element={ <AdminFaqUpdate />} />
                 <Route path="services" element={ <AdminService />} />
               </Route>
             </Routes>

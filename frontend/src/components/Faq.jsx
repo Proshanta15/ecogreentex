@@ -6,6 +6,8 @@ import { NavLink } from "react-router-dom";
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
+  
+
   const faqs = [
     {
       question: "What Types Of Apparel Does Ecogreentex Specialize In?",

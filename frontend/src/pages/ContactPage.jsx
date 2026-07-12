@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa6";
 import "../styles/contact-us.css";
 import IsLoading from "../components/IsLoading";
+import { toast } from "react-toastify";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -46,6 +47,7 @@ const ContactPage = () => {
       });
       if (response.ok) {
         setIsSubmitting(false);
+        toast.success("Message sent successfully");
         setFormData({
           username: "",
           phone: "",
@@ -53,7 +55,10 @@ const ContactPage = () => {
           company: "",
           message: "",
         });
-        alert("Your message has been sent successfully!");
+      } else {
+        const result = await response.json();
+        setIsSubmitting(false);
+        toast.error(result.extraDetails || "Failed to send message");
       }
     } catch (error) {
       console.error("Error sending contact form:", error);
@@ -65,7 +70,7 @@ const ContactPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/admin/contact-content`,
+        `http://localhost:3000/api/admin/contact/content`,
         {
           method: "GET",
           headers: {

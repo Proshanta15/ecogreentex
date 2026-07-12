@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
-// import { toast } from "react-toastify";
-import { useAuth } from "../store/auth";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import IsLoading from "../components/IsLoading";
-import "../styles/contact-content.css";
+import "../styles/contact-content-update.css";
 import { toast } from "react-toastify";
+import { useAuth } from "../store/auth";
 
-const ContactContentForm = () => {
+const ContactContentUpdate = () => {
   const [contactContentData, setContactContentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { authorizationToken } = useAuth();
+  const navigate = useNavigate();
+  const params = useParams();
 
   const getContactContentData = async () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/admin/contact-content`,
+        `http://localhost:3000/api/admin/contact/content`,
         {
           method: "GET",
           headers: {
@@ -53,6 +54,28 @@ const ContactContentForm = () => {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/admin/contact/content/update/${params.id}`,{
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": authorizationToken
+        },
+        body: JSON.stringify(contactContentData)
+      });
+      if (response.ok) {
+        toast.success("Contact content updated successfully");
+        navigate('/admin/contact/content');
+      }
+    } catch (error) {
+      console.error("Error updating contact:", error);
+      toast.error("Error updating contact");
+    }
+  }
+
   useEffect(() => {
     getContactContentData();
   }, []);
@@ -71,14 +94,13 @@ const ContactContentForm = () => {
     <main className="contact-content-form-page">
       <section className="contact-content-form-card">
         <div className="contact-content-form-header">
-          <p className="contact-content-form-tag">Create New Contact</p>
-          <h1>Add New Contact</h1>
+          <h1>Update Contact Content</h1>
           <p>
-            Fill in the contact information below to create a new contact entry.
+            Fill in the contact information below to update the contact content.
           </p>
         </div>
 
-        <form className="contact-content-form" >
+        <form className="contact-content-form" onSubmit={handleSubmit}>
           {/* Title Field */}
           <div className="contact-content-field">
             <label htmlFor="title">Title</label>
@@ -261,11 +283,11 @@ const ContactContentForm = () => {
 
           {/* Form Actions */}
           <div className="contact-content-form-actions">
-            <button type="button" className="btn btn-secondary">
+            <Link to="/admin/contact/content" type="button" className="btn btn-secondary">
               Cancel
-            </button>
+            </Link>
             <button type="submit" className="btn btn-primary">
-              Create Contact
+              Update Contact
             </button>
           </div>
         </form>
@@ -274,4 +296,4 @@ const ContactContentForm = () => {
   );
 };
 
-export default ContactContentForm;
+export default ContactContentUpdate;

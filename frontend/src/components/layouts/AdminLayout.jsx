@@ -43,8 +43,13 @@ export const AdminLayout = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/admin/contact-content" className={navLinkClass}>
+              <NavLink to="/admin/contact/content" className={navLinkClass}>
                 Contact Content
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/faq" className={navLinkClass}>
+                FAQ
               </NavLink>
             </li>
             <li>

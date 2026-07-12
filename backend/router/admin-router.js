@@ -3,6 +3,7 @@ import { deleteContactById, deleteUserById, getAllContacts, getAllServices, getA
 import adminMiddleware from "../middlewares/admin-middleware.js";
 import authMiddleware from "../middlewares/auth-middleware.js";
 import { contactContentForm, getContactContent, updateContactContent } from "../controllers/contact-content-controller.js";
+import { createFAQ, deleteFAQ, getAllFAQ, getSingleFAQ } from "../controllers/faq-controller.js";
 const router = express.Router();
 
 router.route('/users').get(authMiddleware, adminMiddleware, getAllUsers);
@@ -18,9 +19,15 @@ router.route('/contacts/delete/:id').delete(authMiddleware, adminMiddleware, del
 
 router.route('/services').get(authMiddleware, adminMiddleware, getAllServices);
 
-router.route('/contact-content').get(authMiddleware, adminMiddleware, getContactContent);
-router.route('/contact-content').post(authMiddleware, adminMiddleware, contactContentForm);
-router.route('/contact-content/update').post(authMiddleware, adminMiddleware, updateContactContent);
+// Contact Content
+router.route('/contact/content').get(authMiddleware, adminMiddleware, getContactContent);
+router.route('/contact/content').post(authMiddleware, adminMiddleware, contactContentForm);
+router.route('/contact/content/update/:id').patch(authMiddleware, adminMiddleware, updateContactContent);
 
+// Faq Router
+router.route('/faq/create').post(authMiddleware, adminMiddleware, createFAQ);
+router.route('/faq').get(authMiddleware, adminMiddleware, getAllFAQ);
+router.route('/faq/edit/:id').get(authMiddleware, adminMiddleware, getSingleFAQ);
+router.route('/faq/delete/:id').delete(authMiddleware, adminMiddleware, deleteFAQ);
 
 export default router;

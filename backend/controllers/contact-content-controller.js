@@ -5,7 +5,10 @@ export const contactContentForm = async(req, res, next) =>{
     try {
         const response = req.body;
         await ContactContent.create(response);
-        res.status(200).json({Message: 'Contact Content sent successfully'})
+        res.status(201).json({
+            success: true,
+            message: 'Contact Content sent successfully'
+        });
     } catch (error) {
         next(error);
     }
