@@ -21,6 +21,7 @@ import ContactContentUpdate from "./pages/ContactContentUpdate";
 import AdminFAQ from "./pages/AdminFAQ";
 import AdminFaqForm from "./pages/AdminFaqForm";
 import AdminFaqUpdate from "./pages/AdminFaqUpdate";
+import AdminServiceCreate from "./pages/AdminServiceCreate";
 
 function App() {
   return (
@@ -52,7 +53,7 @@ function App() {
                 <Route path="faq" element={ <AdminFAQ />} />
                 <Route path="faq/create" element={ <AdminFaqForm />} />
                 <Route path="faq/edit/:id" element={ <AdminFaqUpdate />} />
-                <Route path="services" element={ <AdminService />} />
+                <Route path="services" element={ <AdminServiceCreate />} />
               </Route>
             </Routes>
           </div>

@@ -17,18 +17,20 @@ router.route('/contacts/update/:id').patch(authMiddleware, adminMiddleware, upda
 router.route('/contacts/delete/:id').delete(authMiddleware, adminMiddleware, deleteContactById);
 
 
-router.route('/services').get(authMiddleware, adminMiddleware, getAllServices);
 
-// Contact Content
-router.route('/contact/content').get(authMiddleware, adminMiddleware, getContactContent);
+// Contact Content (GET is public for frontend display)
+router.route('/contact/content').get(getContactContent);
 router.route('/contact/content').post(authMiddleware, adminMiddleware, contactContentForm);
 router.route('/contact/content/update/:id').patch(authMiddleware, adminMiddleware, updateContactContent);
 
-// Faq Router
+// Faq Router (GET is public for frontend display)
 router.route('/faq/create').post(authMiddleware, adminMiddleware, createFAQ);
-router.route('/faq').get(authMiddleware, adminMiddleware, getAllFAQ);
+router.route('/faq').get(getAllFAQ);
 router.route('/faq/edit/:id').get(authMiddleware, adminMiddleware, getSingleFAQ);
 router.route('/faq/update/:id').patch(authMiddleware, adminMiddleware, updateSingleFAQ);
 router.route('/faq/delete/:id').delete(authMiddleware, adminMiddleware, deleteFAQ);
+
+
+router.route('/services').get(authMiddleware, adminMiddleware, getAllServices);
 
 export default router;

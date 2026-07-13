@@ -1,218 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/service.css";
 
+const API_BASE = "http://localhost:3000";
+
 const ServicePage = () => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeGender, setActiveGender] = useState({});
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const categories = [
-    {
-      id: "knitwear",
-      title: "Knitwear & Lingerie",
-      icon: "🧶",
-      description:
-        "Premium knitwear and lingerie solutions with superior quality and comfort.",
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop",
-      gender: ["Men", "Women", "Children"],
-      items: {
-        men: [
-          {
-            name: "Men's Cotton T-Shirts",
-            image:
-              "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Polo Shirts",
-            image:
-              "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's V-Neck Sweaters",
-            image:
-              "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
-          },
-        ],
-        women: [
-          {
-            name: "Women's Knit Dresses",
-            image:
-              "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Lingerie Set",
-            image:
-              "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Cardigans",
-            image:
-              "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Turtlenecks",
-            image:
-              "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
-          },
-        ],
-        children: [
-          {
-            name: "Kids Knit T-Shirts",
-            image:
-              "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Kids Cardigans",
-            image:
-              "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=300&fit=crop",
-          },
-        ],
-      },
-    },
-    {
-      id: "sweater",
-      title: "Sweater",
-      icon: "🧥",
-      description:
-        "Warm, stylish, and sustainable sweater solutions for all seasons.",
-      image:
-        "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=600&h=400&fit=crop",
-      gender: ["Men", "Women", "Children"],
-      items: {
-        men: [
-          {
-            name: "Men's Intended Knit Sweaters",
-            image:
-              "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Pullovers",
-            image:
-              "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Windbreakers",
-            image:
-              "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Navy Denim Coat",
-            image:
-              "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
-          },
-        ],
-        women: [
-          {
-            name: "Women's Fashion Sweaters",
-            image:
-              "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Lightweight Knit Dresses",
-            image:
-              "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Fashion Coats",
-            image:
-              "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Chunky Knits",
-            image:
-              "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Turtleneck Sweaters",
-            image:
-              "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
-          },
-        ],
-        children: [
-          {
-            name: "Kids Sweater Sets",
-            image:
-              "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Kids Cardigans",
-            image:
-              "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=300&fit=crop",
-          },
-        ],
-      },
-    },
-    {
-      id: "woven",
-      title: "Woven & Denim",
-      icon: "👖",
-      description:
-        "High-quality woven and denim products for timeless style and durability.",
-      image:
-        "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&h=400&fit=crop",
-      gender: ["Men", "Women", "Children"],
-      items: {
-        men: [
-          {
-            name: "Men's Denim Jeans",
-            image:
-              "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Cargo Pants",
-            image:
-              "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Chinos",
-            image:
-              "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Men's Denim Jackets",
-            image:
-              "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&h=300&fit=crop",
-          },
-        ],
-        women: [
-          {
-            name: "Women's Denim Jeans",
-            image:
-              "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Wide Leg Pants",
-            image:
-              "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Denim Skirts",
-            image:
-              "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Women's Corduroy Pants",
-            image:
-              "https://images.unsplash.com/photo-1618354691551-44de113f0164?w=400&h=300&fit=crop",
-          },
-        ],
-        children: [
-          {
-            name: "Kids Denim Jeans",
-            image:
-              "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=400&h=300&fit=crop",
-          },
-          {
-            name: "Kids Denim Jackets",
-            image:
-              "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400&h=300&fit=crop",
-          },
-        ],
-      },
-    },
-  ];
+  useEffect(() => {
+    const loadServices = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_BASE}/api/services`);
+        const result = await response.json();
+        if (response.ok && result.success) {
+          setCategories(result.data);
+        } else {
+          setError(result.message || "Failed to load services");
+        }
+      } catch (err) {
+        console.error("Error fetching services:", err);
+        setError("Failed to load services");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadServices();
+  }, []);
+
+  // Resolve image paths: relative uploads get the backend base URL,
+  // external URLs are used as-is, and missing images fall back to a placeholder.
+  const getImageUrl = (img) => {
+    if (!img) return "https://via.placeholder.com/400x300?text=No+Image";
+    if (img.startsWith("http")) return img;
+    return `${API_BASE}/${img.replace(/\\/g, "/")}`;
+  };
 
   const handleGenderFilter = (categoryId, gender) => {
     setActiveGender((prev) => ({
@@ -227,19 +55,19 @@ const ServicePage = () => {
     let items = [];
 
     if (!activeGenderFilter || activeGenderFilter === "All") {
-      Object.values(category.items).forEach((genderItems) => {
+      Object.values(category.items || {}).forEach((genderItems) => {
         items = items.concat(genderItems);
       });
     } else {
       const genderKey = activeGenderFilter.toLowerCase();
-      items = category.items[genderKey] || [];
+      items = category.items?.[genderKey] || [];
     }
 
     return items;
   };
 
-  const openModal = (item) => {
-    setSelectedItem(item);
+  const openModal = (item, category) => {
+    setSelectedItem({ ...item, categoryTitle: category?.title });
     setIsModalOpen(true);
     document.body.style.overflow = "hidden";
   };
@@ -268,120 +96,143 @@ const ServicePage = () => {
             </h1>
             <p className="services-page-subtitle">
               Explore our comprehensive range of high-quality apparel sourcing
-              solutions across Knitwear, Sweater, and Woven & Denim categories
-              for Men, Women, and Children.
+              solutions across categories for Men, Women, and Children.
             </p>
           </div>
 
+          {/* Loading / Error States */}
+          {loading && (
+            <div className="services-page-no-items">
+              <span className="services-page-no-items-icon">⏳</span>
+              <p>Loading categories...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="services-page-no-items">
+              <span className="services-page-no-items-icon">⚠️</span>
+              <p>{error}</p>
+            </div>
+          )}
+
           {/* Categories */}
-          <div className="services-page-categories-wrapper">
-            {categories.map((category) => {
-              const filteredItems = getFilteredItems(category);
-              const activeGenderFilter = activeGender[category.id];
+          {!loading && !error && (
+            <div className="services-page-categories-wrapper">
+              {categories.length > 0 ? (
+                categories.map((category) => {
+                  const filteredItems = getFilteredItems(category);
+                  const activeGenderFilter = activeGender[category.id];
 
-              return (
-                <div
-                  className="services-page-category-section"
-                  key={category.id}
-                >
-                  {/* Category Header */}
-                  <div className="services-page-category-header">
-                    <div className="services-page-category-header-left">
-                      <div className="services-page-category-icon">
-                        {category.icon}
-                      </div>
-                      <div>
-                        <h2 className="services-page-category-title">
-                          {category.title}
-                        </h2>
-                        <p className="services-page-category-description">
-                          {category.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Category Image */}
-                  <div className="services-page-category-image-wrapper">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="services-page-category-image"
-                    />
-                  </div>
-
-                  {/* Gender Filters */}
-                  <div className="services-page-gender-filters">
-                    <span className="services-page-filter-label">Gender:</span>
-                    <button
-                      className={`services-page-gender-btn ${!activeGenderFilter ? "active" : ""}`}
-                      onClick={() =>
-                        setActiveGender((prev) => ({
-                          ...prev,
-                          [category.id]: null,
-                        }))
-                      }
+                  return (
+                    <div
+                      className="services-page-category-section"
+                      key={category.id}
                     >
-                      All
-                    </button>
-                    {category.gender.map((gender) => (
-                      <button
-                        key={gender}
-                        className={`services-page-gender-btn ${activeGenderFilter === gender ? "active" : ""}`}
-                        onClick={() => handleGenderFilter(category.id, gender)}
-                      >
-                        {gender === "Men"
-                          ? "👨"
-                          : gender === "Women"
-                            ? "👩"
-                            : "👶"}{" "}
-                        {gender}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Items Grid */}
-                  <div className="services-page-items-grid">
-                    {filteredItems.length > 0 ? (
-                      filteredItems.map((item, idx) => (
-                        <div
-                          className="services-page-item-card"
-                          key={idx}
-                          onClick={() => openModal(item)}
-                        >
-                          <div className="services-page-item-image-wrapper">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="services-page-item-image"
-                            />
-                            <div className="services-page-item-overlay">
-                              <span className="services-page-item-view-icon">
-                                🔍
-                              </span>
-                              <span className="services-page-item-view-text">
-                                View Details
-                              </span>
-                            </div>
+                      {/* Category Header */}
+                      <div className="services-page-category-header">
+                        <div className="services-page-category-header-left">
+                          <div className="services-page-category-icon">
+                            {category.icon}
                           </div>
-                          <div className="services-page-item-info">
-                            <span className="services-page-item-name">
-                              {item.name}
-                            </span>
+                          <div>
+                            <h2 className="services-page-category-title">
+                              {category.title}
+                            </h2>
+                            <p className="services-page-category-description">
+                              {category.description}
+                            </p>
                           </div>
                         </div>
-                      ))
-                    ) : (
-                      <div className="services-page-no-items">
-                        <span className="services-page-no-items-icon">📦</span>
-                        <p>No items available for this category</p>
                       </div>
-                    )}
-                  </div>
+
+                      {/* Category Image */}
+                      <div className="services-page-category-image-wrapper">
+                        <img
+                          src={getImageUrl(category.image)}
+                          alt={category.title}
+                          className="services-page-category-image"
+                        />
+                      </div>
+
+                      {/* Gender Filters */}
+                      <div className="services-page-gender-filters">
+                        <span className="services-page-filter-label">Gender:</span>
+                        <button
+                          className={`services-page-gender-btn ${!activeGenderFilter ? "active" : ""}`}
+                          onClick={() =>
+                            setActiveGender((prev) => ({
+                              ...prev,
+                              [category.id]: null,
+                            }))
+                          }
+                        >
+                          All
+                        </button>
+                        {category.gender?.map((gender) => (
+                          <button
+                            key={gender}
+                            className={`services-page-gender-btn ${activeGenderFilter === gender ? "active" : ""}`}
+                            onClick={() => handleGenderFilter(category.id, gender)}
+                          >
+                            {gender === "Men"
+                              ? "👨"
+                              : gender === "Women"
+                                ? "👩"
+                                : "👶"}
+                            {gender}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Items Grid */}
+                      <div className="services-page-items-grid">
+                        {filteredItems.length > 0 ? (
+                          filteredItems.map((item, idx) => (
+                            <div
+                              className="services-page-item-card"
+                              key={idx}
+                              onClick={() => openModal(item, category)}
+                            >
+                              <div className="services-page-item-image-wrapper">
+                                <img
+                                  src={getImageUrl(item.image)}
+                                  alt={item.name}
+                                  className="services-page-item-image"
+                                />
+                                <div className="services-page-item-overlay">
+                                  <span className="services-page-item-view-icon">
+                                    🔍
+                                  </span>
+                                  <span className="services-page-item-view-text">
+                                    View Details
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="services-page-item-info">
+                                <span className="services-page-item-name">
+                                  {item.name}
+                                </span>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="services-page-no-items">
+                            <span className="services-page-no-items-icon">📦</span>
+                            <p>No items available for this category</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="services-page-no-items">
+                  <span className="services-page-no-items-icon">📭</span>
+                  <p>No categories found</p>
                 </div>
-              );
-            })}
-          </div>
+              )}
+            </div>
+          )}
 
           {/* CTA Section */}
           <div className="services-page-cta">
@@ -415,7 +266,7 @@ const ServicePage = () => {
             <div className="services-page-modal-content">
               <div className="services-page-modal-image-wrapper">
                 <img
-                  src={selectedItem.image}
+                  src={getImageUrl(selectedItem.image)}
                   alt={selectedItem.name}
                   className="services-page-modal-image"
                 />
@@ -433,7 +284,7 @@ const ServicePage = () => {
                       Category:
                     </span>
                     <span className="services-page-modal-detail-value">
-                      Premium Collection
+                      {selectedItem.categoryTitle || "Premium Collection"}
                     </span>
                   </div>
                   <div className="services-page-modal-detail">
