@@ -16,10 +16,11 @@ const ServicePage = () => {
     const loadServices = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE}/api/services`);
+        const response = await fetch(`${API_BASE}/api/services?isActive=true`);
         const result = await response.json();
         if (response.ok && result.success) {
-          setCategories(result.data);
+          // Guard: only show active categories on the public page
+          setCategories(result.data.filter((c) => c.isActive !== false));
         } else {
           setError(result.message || "Failed to load services");
         }
@@ -32,6 +33,12 @@ const ServicePage = () => {
     };
 
     loadServices();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, []);
 
   // Resolve image paths: relative uploads get the backend base URL,
@@ -304,7 +311,11 @@ const ServicePage = () => {
                     </span>
                   </div>
                 </div>
-                <NavLink to="/contact" className="services-page-modal-btn">
+                <NavLink
+                  to="/contact"
+                  className="services-page-modal-btn"
+                  onClick={closeModal}
+                >
                   Request a Quote
                   <span className="services-page-modal-btn-arrow">→</span>
                 </NavLink>

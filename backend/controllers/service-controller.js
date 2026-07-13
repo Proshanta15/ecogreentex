@@ -157,21 +157,47 @@ export const updateService = async (req, res) => {
 
     const { title, icon, description, gender, items, isActive } = req.body;
 
+    // Map uploaded files (upload.any) to their field names
+    const uploadedFiles = req.files || [];
+    const categoryFile = uploadedFiles.find((f) => f.fieldname === "image");
+    const itemImageMap = {};
+    uploadedFiles.forEach((f) => {
+      if (f.fieldname.startsWith("item-")) {
+        itemImageMap[f.fieldname] = f.path;
+      }
+    });
+
     // Update fields
     if (title) service.title = title;
     if (icon) service.icon = icon;
     if (description) service.description = description;
     if (gender) service.gender = JSON.parse(gender);
-    if (items) service.items = JSON.parse(items);
     if (isActive !== undefined) service.isActive = isActive;
 
-    // Update image if new image uploaded
-    if (req.file) {
-      // Delete old image if exists
+    // Resolve item image references sent from the client, removing replaced files
+    if (items) {
+      const parsedItems = JSON.parse(items);
+      ["men", "women", "children"].forEach((g) => {
+        if (Array.isArray(parsedItems[g])) {
+          parsedItems[g] = parsedItems[g].map((item) => {
+            if (typeof item.image === "string" && item.image.startsWith("item-")) {
+              // Newly uploaded image
+              return { ...item, image: itemImageMap[item.image] || null };
+            }
+            // Existing image url or null -> keep as-is
+            return item;
+          });
+        }
+      });
+      service.items = parsedItems;
+    }
+
+    // Update category image if a new one was uploaded
+    if (categoryFile) {
       if (service.image && fs.existsSync(service.image)) {
         fs.unlinkSync(service.image);
       }
-      service.image = req.file.path;
+      service.image = categoryFile.path;
     }
 
     await service.save();
@@ -182,8 +208,12 @@ export const updateService = async (req, res) => {
       data: service,
     });
   } catch (error) {
-    // Delete uploaded file if exists
-    if (req.file && fs.existsSync(req.file.path)) {
+    // Delete uploaded files if any exist
+    if (req.files && Array.isArray(req.files)) {
+      req.files.forEach((f) => {
+        if (fs.existsSync(f.path)) fs.unlinkSync(f.path);
+      });
+    } else if (req.file && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
 

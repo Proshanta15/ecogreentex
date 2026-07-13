@@ -1,21 +1,30 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 import "../styles/service-create.css";
 
-const AdminServiceCreate = () => {
+const API_BASE = "http://localhost:3000";
+
+const getImageUrl = (img) => {
+  if (!img) return "";
+  if (img.startsWith("http")) return img;
+  return `${API_BASE}/${img.replace(/\\/g, "/")}`;
+};
+
+const AdminServiceEdit = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { authorizationToken } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
 
   const [formData, setFormData] = useState({
-    id: "",
     title: "",
     icon: "",
     description: "",
     image: null,
-    gender: ["Men", "Women", "Children"],
+    gender: [],
     items: {
       men: [{ name: "", image: null }],
       women: [{ name: "", image: null }],
@@ -30,26 +39,79 @@ const AdminServiceCreate = () => {
     children: [null],
   });
 
+  useEffect(() => {
+    const loadCategory = async () => {
+      try {
+        setFetchLoading(true);
+        const response = await fetch(`${API_BASE}/api/services/${id}`, {
+          method: "GET",
+          headers: { Authorization: authorizationToken },
+        });
+        const result = await response.json();
+        if (response.ok && result.success) {
+          const c = result.data;
+          const items = c.items || {};
+          const genders = c.gender || [];
+          const previews = { men: [], women: [], children: [] };
+          ["men", "women", "children"].forEach((g) => {
+            (items[g] || []).forEach((item) => {
+              previews[g].push(
+                typeof item.image === "string" && item.image
+                  ? getImageUrl(item.image)
+                  : null
+              );
+            });
+          });
+          setFormData({
+            title: c.title || "",
+            icon: c.icon || "",
+            description: c.description || "",
+            image: c.image || null,
+            gender: genders,
+            isActive: c.isActive !== false,
+            items: {
+              men: (items.men || []).map((i) => ({
+                name: i.name || "",
+                image: i.image || null,
+              })),
+              women: (items.women || []).map((i) => ({
+                name: i.name || "",
+                image: i.image || null,
+              })),
+              children: (items.children || []).map((i) => ({
+                name: i.name || "",
+                image: i.image || null,
+              })),
+            },
+          });
+          setCategoryImagePreview(c.image ? getImageUrl(c.image) : "");
+          setItemImagePreviews(previews);
+        } else {
+          toast.error(result.message || "Failed to load category");
+        }
+      } catch (err) {
+        console.error("Error loading category:", err);
+        toast.error("Failed to load category");
+      } finally {
+        setFetchLoading(false);
+      }
+    };
+
+    loadCategory();
+  }, [id, authorizationToken]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCategoryImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setCategoryImagePreview(reader.result);
-      };
+      reader.onloadend = () => setCategoryImagePreview(reader.result);
       reader.readAsDataURL(file);
-      setFormData((prev) => ({
-        ...prev,
-        image: file,
-      }));
+      setFormData((prev) => ({ ...prev, image: file }));
     }
   };
 
@@ -87,7 +149,6 @@ const AdminServiceCreate = () => {
         }));
       };
       reader.readAsDataURL(file);
-      
       setFormData((prev) => ({
         ...prev,
         items: {
@@ -154,31 +215,30 @@ const AdminServiceCreate = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Validate required fields
-    if (!formData.id || !formData.title || !formData.icon || !formData.description) {
+    if (!formData.title || !formData.icon || !formData.description) {
       toast.error("Please fill in all required fields");
       setLoading(false);
       return;
     }
 
-    // Validate id format (lowercase letters, numbers, hyphens only)
-    if (!/^[a-z0-9-]+$/.test(formData.id)) {
-      toast.error("Category ID can only contain lowercase letters, numbers, and hyphens");
+    if (!/^[a-z0-9-]+$/.test(id)) {
+      toast.error("Invalid category id");
       setLoading(false);
       return;
     }
 
-    // Validate at least one gender is selected
     if (!formData.gender || formData.gender.length === 0) {
       toast.error("Please select at least one gender");
       setLoading(false);
       return;
     }
 
-    // Validate items
-    const allItems = [...formData.items.men, ...formData.items.women, ...formData.items.children];
-    const hasEmptyName = allItems.some(item => !item.name);
-    if (hasEmptyName) {
+    const allItems = [
+      ...formData.items.men,
+      ...formData.items.women,
+      ...formData.items.children,
+    ];
+    if (allItems.some((item) => !item.name)) {
       toast.error("Please fill in all item names");
       setLoading(false);
       return;
@@ -186,19 +246,16 @@ const AdminServiceCreate = () => {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("id", formData.id);
       formDataToSend.append("title", formData.title);
       formDataToSend.append("icon", formData.icon);
       formDataToSend.append("description", formData.description);
       formDataToSend.append("gender", JSON.stringify(formData.gender));
+      formDataToSend.append("isActive", formData.isActive ? "true" : "false");
 
-      // Append category image if it's a File object
       if (formData.image instanceof File) {
         formDataToSend.append("image", formData.image);
       }
 
-      // Append items, uploading each item image as a separate file.
-      // The file is referenced in the items JSON by its field name (e.g. "item-men-0").
       const itemsToSend = { men: [], women: [], children: [] };
       ["men", "women", "children"].forEach((gender) => {
         itemsToSend[gender] = formData.items[gender].map((item, index) => {
@@ -216,38 +273,46 @@ const AdminServiceCreate = () => {
 
       formDataToSend.append("items", JSON.stringify(itemsToSend));
 
-      const response = await fetch(`http://localhost:3000/api/admin/services`, {
-        method: "POST",
-        headers: {
-          Authorization: authorizationToken,
-        },
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        `${API_BASE}/api/admin/services/${id}`,
+        {
+          method: "PUT",
+          headers: { Authorization: authorizationToken },
+          body: formDataToSend,
+        }
+      );
 
       const result = await response.json();
 
       if (response.ok) {
-        toast.success("Category created successfully!");
-        navigate("/admin/categories");
+        toast.success("Category updated successfully!");
+        navigate("/admin/services");
       } else {
         toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
-      console.error("Error saving category:", error);
-      toast.error("Failed to save category");
+      console.error("Error updating category:", error);
+      toast.error("Failed to update category");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCancel = () => {
-    navigate("/admin/services");
-  };
+  const handleCancel = () => navigate("/admin/services");
+
+  if (fetchLoading) {
+    return (
+      <div className="admin-category-page">
+        <div className="admin-category-container">
+          <div className="admin-category-loading">Loading category…</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-category-page">
       <div className="admin-category-container">
-        {/* Header */}
         <div className="admin-category-header">
           <div className="admin-category-header-top">
             <div className="admin-category-badge">
@@ -255,35 +320,26 @@ const AdminServiceCreate = () => {
               Category Management
             </div>
           </div>
-          <h1 className="admin-category-title">Create New Category</h1>
+          <h1 className="admin-category-title">Edit Category</h1>
           <p className="admin-category-subtitle">
-            Fill in the category information below to create a new category
+            Update the category information below
           </p>
         </div>
 
-        {/* Form */}
-        <form className="admin-category-form" onSubmit={handleSubmit} encType="multipart/form-data">
-          {/* Basic Information */}
+        <form
+          className="admin-category-form"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
           <div className="admin-category-section">
             <h2 className="admin-category-section-title">Basic Information</h2>
-            
-            {/* Category ID */}
+
             <div className="admin-category-form-group">
-              <label htmlFor="id">
-                Category ID <span className="required">*</span>
-              </label>
-              <input
-                id="id"
-                name="id"
-                type="text"
-                placeholder="e.g., knitwear, sweater, woven"
-                value={formData.id}
-                onChange={handleChange}
-                required
-              />
+              <label>Category ID</label>
+              <input type="text" value={id} disabled />
+              <small className="help-text">Category ID cannot be changed</small>
             </div>
 
-            {/* Title */}
             <div className="admin-category-form-group">
               <label htmlFor="title">
                 Title <span className="required">*</span>
@@ -292,14 +348,12 @@ const AdminServiceCreate = () => {
                 id="title"
                 name="title"
                 type="text"
-                placeholder="e.g., Knitwear & Lingerie"
                 value={formData.title}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            {/* Icon */}
             <div className="admin-category-form-group">
               <label htmlFor="icon">
                 Icon <span className="required">*</span>
@@ -308,15 +362,12 @@ const AdminServiceCreate = () => {
                 id="icon"
                 name="icon"
                 type="text"
-                placeholder="e.g., 🧶, 🧥, 👖"
                 value={formData.icon}
                 onChange={handleChange}
                 required
               />
-              <small className="help-text">Use emoji or icon code</small>
             </div>
 
-            {/* Description */}
             <div className="admin-category-form-group">
               <label htmlFor="description">
                 Description <span className="required">*</span>
@@ -325,26 +376,21 @@ const AdminServiceCreate = () => {
                 id="description"
                 name="description"
                 rows="3"
-                placeholder="Enter category description"
                 value={formData.description}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            {/* Category Image Upload */}
             <div className="admin-category-form-group">
-              <label htmlFor="categoryImage">
-                Category Image <span className="required">*</span>
-              </label>
+              <label>Category Image</label>
               <div className="file-upload-wrapper">
                 <input
-                  id="categoryImage"
-                  name="categoryImage"
                   type="file"
                   accept="image/*"
                   onChange={handleCategoryImageChange}
                   className="file-input"
+                  id="categoryImage"
                 />
                 <label htmlFor="categoryImage" className="file-upload-label">
                   <span className="upload-icon">📤</span>
@@ -366,16 +412,14 @@ const AdminServiceCreate = () => {
                   </button>
                 </div>
               )}
-              <small className="help-text">Upload a category image (JPG, PNG, WEBP)</small>
+              <small className="help-text">
+                Leave unchanged to keep the current image
+              </small>
             </div>
           </div>
 
-          {/* Gender Selection */}
           <div className="admin-category-section">
             <h2 className="admin-category-section-title">Gender Selection</h2>
-            <p className="admin-category-section-desc">
-              Select which genders this category applies to
-            </p>
             <div className="admin-category-gender-options">
               {["Men", "Women", "Children"].map((gender) => (
                 <label key={gender} className="admin-category-gender-checkbox">
@@ -385,29 +429,25 @@ const AdminServiceCreate = () => {
                     onChange={() => handleGenderChange(gender)}
                   />
                   <span className="admin-category-gender-label">
-                    {gender === "Men" ? "👨" : gender === "Women" ? "👩" : "👶"} {gender}
+                    {gender === "Men" ? "👨" : gender === "Women" ? "👩" : "👶"}{" "}
+                    {gender}
                   </span>
                 </label>
               ))}
             </div>
           </div>
 
-          {/* Items for Each Gender */}
           <div className="admin-category-section">
             <h2 className="admin-category-section-title">Items</h2>
-            <p className="admin-category-section-desc">
-              Add items for each selected gender with custom images
-            </p>
-
             {formData.gender.map((gender) => {
               const genderKey = gender.toLowerCase();
               const items = formData.items[genderKey] || [];
               const previews = itemImagePreviews[genderKey] || [];
-
               return (
                 <div key={gender} className="admin-category-gender-items">
                   <h3 className="admin-category-gender-title">
-                    {gender === "Men" ? "👨" : gender === "Women" ? "👩" : "👶"} {gender}'s Items
+                    {gender === "Men" ? "👨" : gender === "Women" ? "👩" : "👶"}{" "}
+                    {gender}'s Items
                   </h3>
                   <div className="admin-category-items-list">
                     {items.map((item, index) => (
@@ -419,12 +459,7 @@ const AdminServiceCreate = () => {
                             placeholder="e.g., Cotton T-Shirts"
                             value={item.name}
                             onChange={(e) =>
-                              handleItemChange(
-                                genderKey,
-                                index,
-                                "name",
-                                e.target.value
-                              )
+                              handleItemChange(genderKey, index, "name", e.target.value)
                             }
                             required
                           />
@@ -439,17 +474,17 @@ const AdminServiceCreate = () => {
                               className="file-input"
                               id={`item-image-${genderKey}-${index}`}
                             />
-                            <label htmlFor={`item-image-${genderKey}-${index}`} className="file-upload-label small">
+                            <label
+                              htmlFor={`item-image-${genderKey}-${index}`}
+                              className="file-upload-label small"
+                            >
                               <span className="upload-icon">📤</span>
                               {previews[index] ? "Change" : "Upload"}
                             </label>
                           </div>
                           {previews[index] && (
                             <div className="item-image-preview">
-                              <img 
-                                src={previews[index]} 
-                                alt={item.name || "Item preview"} 
-                              />
+                              <img src={previews[index]} alt={item.name || "Item preview"} />
                               <button
                                 type="button"
                                 className="item-image-preview-remove"
@@ -484,27 +519,18 @@ const AdminServiceCreate = () => {
             })}
           </div>
 
-          {/* Form Actions */}
           <div className="admin-category-form-actions">
-            <button
-              type="button"
-              className="btn-cancel"
-              onClick={handleCancel}
-            >
+            <button type="button" className="btn-cancel" onClick={handleCancel}>
               Cancel
             </button>
-            <button
-              type="submit"
-              className="btn-submit"
-              disabled={loading}
-            >
+            <button type="submit" className="btn-submit" disabled={loading}>
               {loading ? (
                 <>
                   <span className="spinner"></span>
-                  Creating...
+                  Updating...
                 </>
               ) : (
-                "Create Category"
+                "Update Category"
               )}
             </button>
           </div>
@@ -514,4 +540,4 @@ const AdminServiceCreate = () => {
   );
 };
 
-export default AdminServiceCreate;
+export default AdminServiceEdit;

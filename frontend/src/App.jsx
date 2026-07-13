@@ -16,12 +16,13 @@ import RegisterForm from "./pages/RegisterForm";
 import ServicePage from "./pages/ServicePage";
 import ScrollToTop from "./ScrollToTop";
 import ContactContentForm from "./pages/ContactContentForm";
-import { AdminService } from "./pages/AdminService";
+import  AdminService  from "./pages/AdminService";
 import ContactContentUpdate from "./pages/ContactContentUpdate";
 import AdminFAQ from "./pages/AdminFAQ";
 import AdminFaqForm from "./pages/AdminFaqForm";
 import AdminFaqUpdate from "./pages/AdminFaqUpdate";
 import AdminServiceCreate from "./pages/AdminServiceCreate";
+import AdminServiceEdit from "./pages/AdminServiceEdit";
 
 function App() {
   return (
@@ -53,7 +54,9 @@ function App() {
                 <Route path="faq" element={ <AdminFAQ />} />
                 <Route path="faq/create" element={ <AdminFaqForm />} />
                 <Route path="faq/edit/:id" element={ <AdminFaqUpdate />} />
-                <Route path="services" element={ <AdminServiceCreate />} />
+                <Route path="services" element={ <AdminService />} />
+                <Route path="services/create" element={ <AdminServiceCreate />} />
+                <Route path="services/edit/:id" element={ <AdminServiceEdit />} />
               </Route>
             </Routes>
           </div>

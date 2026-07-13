@@ -60,7 +60,7 @@ router.put(
   "/admin/services/:id",
   authMiddleware,
   adminMiddleware,
-  upload.single("image"),
+  upload.any(),
   updateService,
 );
 router.delete(
