@@ -10,6 +10,7 @@ import contactRoute from './router/contact-router.js';
 import serviceRoute from './router/service-router.js';
 import aboutRoute from './router/about-router.js';
 import homeRoute from './router/home-router.js';
+import footerShowcaseRoute from './router/footerShowcase-router.js';
 import connectDB from './utils/db.js';
 
 dotenv.config();
@@ -50,6 +51,9 @@ app.use("/api", aboutRoute);
 
 // Home page content routes
 app.use("/api", homeRoute);
+
+// Footer showcase content routes
+app.use("/api", footerShowcaseRoute);
 
 
 app.use(errorMiddleware);

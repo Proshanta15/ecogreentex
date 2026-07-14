@@ -19,6 +19,7 @@ import ContactContentForm from "./pages/ContactContentForm";
 import  AdminService  from "./pages/AdminService";
 import AdminAbout from "./pages/AdminAbout";
 import AdminHome from "./pages/AdminHome";
+import AdminFooterShowcase from "./pages/AdminFooterShowcase";
 import ContactContentUpdate from "./pages/ContactContentUpdate";
 import AdminFAQ from "./pages/AdminFAQ";
 import AdminFaqForm from "./pages/AdminFaqForm";
@@ -59,6 +60,7 @@ function App() {
                 <Route path="services" element={ <AdminService />} />
                 <Route path="about" element={ <AdminAbout />} />
                 <Route path="home" element={ <AdminHome />} />
+                <Route path="footer-showcase" element={ <AdminFooterShowcase />} />
                 <Route path="services/create" element={ <AdminServiceCreate />} />
                 <Route path="services/edit/:id" element={ <AdminServiceEdit />} />
               </Route>

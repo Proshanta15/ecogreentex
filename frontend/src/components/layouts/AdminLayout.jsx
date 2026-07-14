@@ -62,6 +62,11 @@ export const AdminLayout = () => {
                 FAQ
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/admin/footer-showcase" className={navLinkClass}>
+                Footer Showcase
+              </NavLink>
+            </li>
             
             <li>
               <NavLink to="/" className={navLinkClass}>
