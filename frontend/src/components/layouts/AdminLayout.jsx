@@ -28,13 +28,13 @@ export const AdminLayout = () => {
         <nav aria-label="Admin navigation">
           <ul className="admin-nav-list">
             <li>
-              <NavLink to="/admin/users" className={navLinkClass}>
-                Users
+              <NavLink to="/admin/home" className={navLinkClass}>
+                Home
               </NavLink>
             </li>
             <li>
-              <NavLink to="/admin/contacts" className={navLinkClass}>
-                Contacts
+              <NavLink to="/admin/about" className={navLinkClass}>
+                About Content
               </NavLink>
             </li>
             <li>
@@ -48,10 +48,21 @@ export const AdminLayout = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/admin/contacts" className={navLinkClass}>
+                Contacts
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/users" className={navLinkClass}>
+                Users
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/admin/faq" className={navLinkClass}>
                 FAQ
               </NavLink>
             </li>
+            
             <li>
               <NavLink to="/" className={navLinkClass}>
                 Back To Site

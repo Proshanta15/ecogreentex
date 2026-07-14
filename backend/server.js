@@ -8,6 +8,8 @@ import adminRoute from './router/admin-router.js';
 import authRoute from './router/auth-router.js';
 import contactRoute from './router/contact-router.js';
 import serviceRoute from './router/service-router.js';
+import aboutRoute from './router/about-router.js';
+import homeRoute from './router/home-router.js';
 import connectDB from './utils/db.js';
 
 dotenv.config();
@@ -17,8 +19,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 let corsOptions = {
-    // origin: 'http://localhost:5173', // Replace with your frontend URL
-    origin: 'http://localhost:5174', // Replace with your frontend URL
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    // origin: 'http://localhost:5174', // Replace with your frontend URL
     // origin: 'https://ecogreentex.eu.com', // Replace with your frontend URL
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
@@ -42,6 +44,13 @@ app.use("/api/admin", adminRoute);
 
 // Service / Category routes
 app.use("/api", serviceRoute);
+
+// About page content routes
+app.use("/api", aboutRoute);
+
+// Home page content routes
+app.use("/api", homeRoute);
+
 
 app.use(errorMiddleware);
 

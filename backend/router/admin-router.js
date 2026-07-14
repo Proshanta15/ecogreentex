@@ -31,6 +31,4 @@ router.route('/faq/update/:id').patch(authMiddleware, adminMiddleware, updateSin
 router.route('/faq/delete/:id').delete(authMiddleware, adminMiddleware, deleteFAQ);
 
 
-router.route('/services').get(authMiddleware, adminMiddleware, getAllServices);
-
 export default router;

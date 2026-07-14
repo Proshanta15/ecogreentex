@@ -1,7 +1,31 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const WhoWeAre = () => {
+const defaultWhoWeAre = {
+  badge: "WHO WE ARE",
+  title: "Your ISO-Certified",
+  titleHighlight: " Sourcing Partner",
+  description: "EcoGreenTex is a leading apparel buying house based in Dhaka, Bangladesh, dedicated to bridging the gap between global fashion brands and high-quality manufacturing. We specialize in comprehensive apparel sourcing, innovative product development, and rigorous quality assurance.",
+  description2: "With a strong commitment to ethical, eco-friendly, and responsible sourcing, we provide a one-stop solution for international buyers. Our team works tirelessly to ensure uncompromised quality, competitive pricing, and timely delivery, helping our partners bring their fashion visions to life with absolute reliability.",
+  buttonText: "LEARN MORE",
+  buttonLink: "/about",
+  cards: [
+    { icon: "ISO 9001", title: "ISO 9001", subtitle: "Certified Quality" },
+    { icon: "100+", title: "100+", subtitle: "Global Partners" },
+    { icon: "Eco-Friendly", title: "Eco-Friendly", subtitle: "Sustainable Practices" },
+  ],
+  stats: [
+    { number: "15", label: "Years Experience" },
+    { number: "500", label: "Factories Network" },
+    { number: "50", label: "Global Brands" },
+  ],
+};
+
+const WhoWeAre = ({ whoWeAre }) => {
+  const data = { ...defaultWhoWeAre, ...(whoWeAre || {}) };
+  const cards = data.cards && data.cards.length ? data.cards : defaultWhoWeAre.cards;
+  const stats = data.stats && data.stats.length ? data.stats : defaultWhoWeAre.stats;
+
   return (
     <section className="about-section">
       <div className="about-container">
@@ -9,31 +33,19 @@ const WhoWeAre = () => {
         <div className="about-content">
           <div className="about-badge">
             <span className="badge-dot"></span>
-            WHO WE ARE
+            {data.badge}
           </div>
 
           <h2 className="about-title">
-            Your ISO-Certified
-            <span className="title-highlight"> Sourcing Partner</span>
+            {data.title}
+            <span className="title-highlight">{data.titleHighlight}</span>
           </h2>
 
-          <p className="about-description">
-            EcoGreenTex is a leading apparel buying house based in Dhaka,
-            Bangladesh, dedicated to bridging the gap between global fashion
-            brands and high-quality manufacturing. We specialize in
-            comprehensive apparel sourcing, innovative product development, and
-            rigorous quality assurance.
-          </p>
+          <p className="about-description">{data.description}</p>
 
-          <p className="about-description second">
-            With a strong commitment to ethical, eco-friendly, and responsible
-            sourcing, we provide a one-stop solution for international buyers.
-            Our team works tirelessly to ensure uncompromised quality,
-            competitive pricing, and timely delivery, helping our partners bring
-            their fashion visions to life with absolute reliability.
-          </p>
-          <NavLink to="/about" className="about-btn">
-            LEARN MORE
+          <p className="about-description second">{data.description2}</p>
+          <NavLink to={data.buttonLink || "/about"} className="about-btn">
+            {data.buttonText}
             <span className="btn-arrow">→</span>
           </NavLink>
         </div>
@@ -41,91 +53,31 @@ const WhoWeAre = () => {
         {/* Right Side - Visual Elements */}
         <div className="about-visual">
           <div className="visual-card">
-            <div className="floating-card card-1">
-              <div className="card-icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path
-                    d="M20 7L9 18L4 13"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                  />
-                </svg>
+            {cards.map((card, index) => (
+              <div className={`floating-card card-${index + 1}`} key={index}>
+                <div className="card-icon">
+                  <span className="card-icon-text">{card.icon}</span>
+                </div>
+                <div className="card-text">
+                  <h4>{card.title}</h4>
+                  <p>{card.subtitle}</p>
+                </div>
               </div>
-              <div className="card-text">
-                <h4>ISO 9001</h4>
-                <p>Certified Quality</p>
-              </div>
-            </div>
-
-            <div className="floating-card card-2">
-              <div className="card-icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" />
-                  <path d="M12 6v6l4 2" stroke="currentColor" />
-                </svg>
-              </div>
-              <div className="card-text">
-                <h4>100+</h4>
-                <p>Global Partners</p>
-              </div>
-            </div>
-
-            <div className="floating-card card-3">
-              <div className="card-icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path
-                    d="M22 11.08V12a10 10 0 11-5.93-9.14"
-                    stroke="currentColor"
-                  />
-                  <polyline
-                    points="22 4 12 14.01 9 11.01"
-                    stroke="currentColor"
-                  />
-                </svg>
-              </div>
-              <div className="card-text">
-                <h4>Eco-Friendly</h4>
-                <p>Sustainable Practices</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="stats-container">
-            <div className="stat-item">
-              <div className="stat-number" data-target="15">
-                0
-              </div>
-              <p>Years Experience</p>
-            </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
-              <div className="stat-number" data-target="500">
-                0
-              </div>
-              <p>Factories Network</p>
-            </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
-              <div className="stat-number" data-target="50">
-                0
-              </div>
-              <p>Global Brands</p>
-            </div>
+            {stats.map((stat, index) => (
+              <React.Fragment key={index}>
+                <div className="stat-item">
+                  <div className="stat-number" data-target={stat.number}>
+                    {stat.number}
+                  </div>
+                  <p>{stat.label}</p>
+                </div>
+                {index < stats.length - 1 && <div className="stat-divider"></div>}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
