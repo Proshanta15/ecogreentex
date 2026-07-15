@@ -10,6 +10,8 @@ import "../styles/contact-us.css";
 import IsLoading from "../components/IsLoading";
 import { toast } from "react-toastify";
 
+const API_BASE = "http://localhost:3000";
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -38,7 +40,7 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/form/contact", {
+      const response = await fetch(`${API_BASE}/api/form/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +72,7 @@ const ContactPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/admin/contact/content`,
+        `${API_BASE}/api/admin/contact/content`,
         {
           method: "GET",
           headers: {

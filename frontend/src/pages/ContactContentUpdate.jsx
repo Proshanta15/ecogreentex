@@ -5,6 +5,8 @@ import "../styles/contact-content-update.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 
+const API_BASE = "http://localhost:3000";
+
 const ContactContentUpdate = () => {
   const [contactContentData, setContactContentData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,7 +60,7 @@ const ContactContentUpdate = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/contact/content/update/${params.id}`,{
+      const response = await fetch(`${API_BASE}/api/admin/contact/content/update/${params.id}`,{
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

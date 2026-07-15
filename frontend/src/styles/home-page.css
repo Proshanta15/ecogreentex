@@ -2009,6 +2009,7 @@
   }
 }
 
+
 @media (max-width: 480px) {
   .why-title {
     font-size: 1.6rem;
@@ -2614,10 +2615,6 @@
     gap: 50px;
   }
 
-  .about-visual {
-    order: -1;
-  }
-
   .visual-card {
     min-height: 350px;
   }
@@ -2671,7 +2668,35 @@
     font-size: 0.75rem;
   }
 }
-
+@media (max-width: 575px) {
+  .about-section {
+    padding: 30px 5%;
+}
+  .expertise-section {
+    padding: 30px 16px;
+  }
+  .about-container {
+    gap: 30px;
+}
+.stat-divider {
+    height: 10px;
+}
+.expertise-header {
+    margin-bottom: 30px;
+}
+.expertise-grid {
+    margin: 30px 0 20px;
+}
+.why-choose-us {
+    padding: 30px 20px;
+}
+.product-showcase {
+    padding: 30px 16px;
+}
+.trusted-brands {
+    padding: 30px 20px;
+}
+}
 @media (max-width: 480px) {
   .about-title {
     font-size: 1.6rem;

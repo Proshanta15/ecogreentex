@@ -4,6 +4,7 @@ import "../styles/faq.css";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth";
 
+const API_BASE = "http://localhost:3000";
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const [faqs, setFaqs] = useState([]);
@@ -11,7 +12,7 @@ const Faq = () => {
 
   const getAllFaqData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/faq`, {
+      const response = await fetch(`${API_BASE}/api/admin/faq`, {
         method: "GET",
         headers: {
           Authorization: authorizationToken,

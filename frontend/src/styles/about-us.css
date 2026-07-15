@@ -711,6 +711,20 @@
   }
 }
 
+@media (max-width: 575px) {
+  .about-page {
+    padding: 30px 16px 30px;
+}
+.about-page-hero-stats {
+    justify-content: space-evenly;
+}
+.about-page-hero {
+    margin-bottom: 30px;
+}
+.about-page-vision-mission {
+    margin-bottom: 40px;
+}
+}
 @media (max-width: 480px) {
   .about-page-hero {
     padding: 20px;

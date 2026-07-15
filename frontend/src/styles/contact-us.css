@@ -416,6 +416,11 @@
   }
 }
 
+@media (max-width: 575px) {
+  .contact-page {
+    padding: 40px 16px 30px;
+}
+}
 @media (max-width: 480px) {
   .contact-page-title {
     font-size: 1.6rem;

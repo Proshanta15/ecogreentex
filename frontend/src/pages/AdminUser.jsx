@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 import '../styles/admin-user.css';
 
+const API_BASE = "http://localhost:3000";
+
 export const AdminUser = () => {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState("")
@@ -11,7 +13,7 @@ export const AdminUser = () => {
 
     const getAllUsersData = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/admin/users`, {
+            const response = await fetch(`${API_BASE}/api/admin/users`, {
                 method: "GET",
                 headers: {
                     Authorization: authorizationToken,
@@ -46,7 +48,7 @@ export const AdminUser = () => {
 
     const deleteUser = async (id) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/admin/users/delete/${id}`, {
+            const response = await fetch(`${API_BASE}/api/admin/users/delete/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: authorizationToken,

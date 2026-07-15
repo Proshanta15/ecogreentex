@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 import "../styles/service-create.css";
 
+const API_BASE = "http://localhost:3000";
+
 const AdminServiceCreate = () => {
   const navigate = useNavigate();
   const { authorizationToken } = useAuth();
@@ -216,7 +218,7 @@ const AdminServiceCreate = () => {
 
       formDataToSend.append("items", JSON.stringify(itemsToSend));
 
-      const response = await fetch(`http://localhost:3000/api/admin/services`, {
+      const response = await fetch(`${API_BASE}/api/admin/services`, {
         method: "POST",
         headers: {
           Authorization: authorizationToken,

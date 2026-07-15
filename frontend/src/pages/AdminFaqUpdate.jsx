@@ -4,6 +4,8 @@ import { useAuth } from '../store/auth';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const API_BASE = "http://localhost:3000";
+
 const AdminFaqUpdate = () => {
 
   const [formData, setFormData] = useState({
@@ -17,7 +19,7 @@ const AdminFaqUpdate = () => {
 
   const getSingleFaqData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/faq/edit/${params.id}`, {
+      const response = await fetch(`${API_BASE}/api/admin/faq/edit/${params.id}`, {
         method: "GET",
         headers: {
           "Authorization": authorizationToken,
@@ -47,7 +49,7 @@ const AdminFaqUpdate = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/faq/update/${params.id}`, {
+      const response = await fetch(`${API_BASE}/api/admin/faq/update/${params.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

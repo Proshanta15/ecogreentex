@@ -4,6 +4,8 @@ import { useAuth } from '../store/auth';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = "http://localhost:3000";
+
 const AdminFaqForm = () => {
 
   const [formData, setFormData] = useState({
@@ -27,7 +29,7 @@ const AdminFaqForm = () => {
     e.preventDefault();
 
     try {
-        const response = await fetch(`http://localhost:3000/api/admin/faq/create`, {
+        const response = await fetch(`${API_BASE}/api/admin/faq/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -5,6 +5,8 @@ import { useAuth } from "../store/auth";
 import IsLoading from "../components/IsLoading";
 import "../styles/admin-faq.css";
 
+const API_BASE = "http://localhost:3000";
+
 const AdminFAQ = () => {
   const [faqData, setFaqData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const AdminFAQ = () => {
   const getAllFaqData = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/api/admin/faq`, {
+      const response = await fetch(`${API_BASE}/api/admin/faq`, {
         method: "GET",
         headers: {
           Authorization: authorizationToken,
@@ -48,7 +50,7 @@ const AdminFAQ = () => {
   const deleteFaq = async (id) => {
 
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/faq/delete/${id}`, {
+      const response = await fetch(`${API_BASE}/api/admin/faq/delete/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: authorizationToken,

@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaXTwitter, FaSquareFacebook, FaSquareInstagram, FaLinkedin } from "react-icons/fa6";
 
+const API_BASE = "http://localhost:3000";
+
 const ContactContentForm = () => {
   const [contactContentData, setContactContentData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +17,7 @@ const ContactContentForm = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/admin/contact/content`,
+        `${API_BASE}/api/admin/contact/content`,
         {
           method: "GET",
           headers: {

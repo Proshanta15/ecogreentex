@@ -713,6 +713,11 @@
   }
 }
 
+@media (max-width: 575px) {
+  .services-page {
+    padding: 40px 16px 30px;
+}
+}
 @media (max-width: 480px) {
   .services-page-title {
     font-size: 1.6rem;

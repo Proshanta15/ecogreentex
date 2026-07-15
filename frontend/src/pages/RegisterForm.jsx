@@ -5,6 +5,8 @@ import Logo from "../assets/logo.png";
 import { useAuth } from "../store/auth.jsx";
 import "../styles/register.css";
 
+const API_BASE = "http://localhost:3000";
+
 export default function RegisterForm() {
   const [user, setUser] = useState({
     username: "",
@@ -32,7 +34,7 @@ export default function RegisterForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+      const response = await fetch(`${API_BASE}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../store/auth";
 import "../styles/admin-contact.css";
+
+const API_BASE = "http://localhost:3000";
 export const AdminUpdate = () => {
 
     const [data, setData] = useState({
@@ -18,7 +20,7 @@ export const AdminUpdate = () => {
 
     const getSingleUserData = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/admin/users/${params.id}`, {
+            const response = await fetch(`${API_BASE}/api/admin/users/${params.id}`, {
                 method: "GET",
                 headers: {
                     "Authorization": authorizationToken,
@@ -38,7 +40,7 @@ export const AdminUpdate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:3000/api/admin/users/update/${params.id}`, {
+            const response = await fetch(`${API_BASE}/api/admin/users/update/${params.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

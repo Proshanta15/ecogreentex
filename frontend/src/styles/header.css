@@ -217,7 +217,7 @@
 @media (max-width: 1550px) {
   .nav_container {
     max-width: 1300px;
-    padding: 10px 0rem;
+    padding: 10px 20px;
   }
 }
 /* Hide desktop nav-links on mobile */

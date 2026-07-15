@@ -5,6 +5,8 @@ import Logo from "../assets/logo.png";
 import { useAuth } from "../store/auth.jsx";
 import "../styles/login.css";
 
+const API_BASE = "http://localhost:3000";
+
 export default function Login() {
   const [user, setUser] = useState({
     email: "",
@@ -28,7 +30,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/login`, {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
